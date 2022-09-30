@@ -16,6 +16,7 @@
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
     "@types/jest": "^27.5.0",
+    "@types/klaw": "^3.0.3",
     "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.38.1",
@@ -40,7 +41,10 @@
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "commander": "^9.4.1",
+    "dotenv": "^16.0.3",
+    "klaw": "^4.0.1",
     "open": "^8.4.0"
   }
 }
