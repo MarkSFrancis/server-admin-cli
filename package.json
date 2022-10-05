@@ -41,7 +41,7 @@
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.0.0",
     "commander": "^9.4.1",
     "dotenv": "^16.0.3",
     "klaw": "^4.0.1",
