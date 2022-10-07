@@ -3,20 +3,26 @@ import { askUserForInput } from '../../console'
 import { distinct } from '../../distinct'
 
 export const getTvSeasonNumber = async (path: string): Promise<number> => {
-  const seasonPattern = /(S\d+)|(Season \d+)/gi
+  const seasonPattern = /(S\d+)|(Season \d+)|(Specials)/gi
 
   const results = [...path.matchAll(seasonPattern)]
 
-  let seasonNumber: number = 0
+  let seasonNumber: number = -1
 
   const possibleSeasonNumbers = results
     .map((r) => {
-      const longSeasonName = 'Season '
-      const shortSeasonName = 'S'
-      if (r[0].startsWith(longSeasonName)) {
-        return r[0].substring(longSeasonName.length)
+      const specialSeasonName = 'specials'
+      const longSeasonName = 'season '
+      const shortSeasonName = 's'
+      const matchText = r[0]
+      const normalizedMatchText = r[0].toLowerCase()
+
+      if (normalizedMatchText.startsWith(longSeasonName)) {
+        return matchText.substring(longSeasonName.length)
+      } else if (normalizedMatchText.includes(specialSeasonName)) {
+        return '0'
       } else {
-        return r[0].substring(shortSeasonName.length)
+        return matchText.substring(shortSeasonName.length)
       }
     })
     .map((r) => Number(r))
@@ -26,7 +32,7 @@ export const getTvSeasonNumber = async (path: string): Promise<number> => {
     seasonNumber = possibleSeasonNumbers[0]
   }
 
-  while (seasonNumber <= 0 || !Number.isInteger(seasonNumber)) {
+  while (seasonNumber < 0 || !Number.isInteger(seasonNumber)) {
     console.log({ results })
     const seasonNumberText = await askUserForInput(
       `Could not auto-detect season for ${basename(
