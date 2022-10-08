@@ -2,25 +2,17 @@ import { mkdir, rename } from 'fs/promises'
 import { basename, dirname, extname, join } from 'path'
 import { getTvSeasonNumber, getTvEpisodeNumber } from './getTvMeta'
 
-export const fixTvEpisodePath = async (path: string) => {
-  const seasonNumber = await getTvSeasonNumber(path)
-  const episodeNumber = await getTvEpisodeNumber(path)
-
-  const newPath = await getFixedTvEpisodePath(path, {
-    seasonNumber,
-    episodeNumber,
-  })
-
+export const fixTvEpisodePath = async (oldPath: string, newPath: string) => {
   await mkdir(dirname(newPath), { recursive: true })
-  await rename(path, newPath)
+  await rename(oldPath, newPath)
 
   return newPath
 }
 
-export const getFixedTvEpisodePath = async (
-  path: string,
-  options: { seasonNumber: number; episodeNumber: number }
-) => {
+export const getFixedTvEpisodePath = async (path: string) => {
+  const seasonNumber = await getTvSeasonNumber(path)
+  const episodeNumber = await getTvEpisodeNumber(path)
+
   let seasonDir = ''
   let episodeFileName = ''
 
@@ -33,21 +25,21 @@ export const getFixedTvEpisodePath = async (
     return num.toString().padStart(2, '0')
   }
 
-  if (options.seasonNumber === 0) {
+  if (seasonNumber === 0) {
     seasonDir += 'Specials'
   } else {
-    seasonDir += `Season ${options.seasonNumber}`
+    seasonDir += `Season ${seasonNumber}`
   }
 
   if (lastDirName === seasonDir) {
     seasonDir = ''
   }
 
-  if (options.seasonNumber === 0) {
+  if (seasonNumber === 0) {
     episodeFileName += 'S00'
   }
 
-  episodeFileName += `E${formatEpisodeNumber(options.episodeNumber)}`
+  episodeFileName += `E${formatEpisodeNumber(episodeNumber)}`
 
   return join(dir, seasonDir, `${episodeFileName}${ext}`)
 }

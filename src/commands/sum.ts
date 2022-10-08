@@ -1,5 +1,5 @@
 import { Command } from 'commander'
-import { sum } from '../lib/math'
+import { sum } from '@/lib/math'
 
 export const sumCommand = new Command('sum')
   .description('add numbers together')
