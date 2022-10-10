@@ -1,9 +1,10 @@
 import { Argument, Command, Option } from 'commander'
-import { getAllFilesOfTypeInDir } from '@/lib/files/crawlerFilter'
+import { filterByExtension } from '@/lib/files/crawlerFilter'
 import { VIDEO_FILE_EXTENSIONS } from '@/lib/files/exts'
 import { fixWindowsPath } from '@/lib/files/fixWindownPath'
 import { getFixedTvEpisodePath } from '@/lib/files/tv/getFixedTvEpisodePath'
 import { moveFile } from '@/lib/files/moveFile'
+import { getAllFilesInDir } from '@/lib/files/crawler'
 
 export const tvNamesLintCommand = new Command('lint')
   .addArgument(
@@ -13,14 +14,14 @@ export const tvNamesLintCommand = new Command('lint')
   .action(async (directory: string, options: { fix?: boolean }) => {
     directory = fixWindowsPath(directory)
 
-    const allFiles = await getAllFilesOfTypeInDir(
-      directory,
-      VIDEO_FILE_EXTENSIONS
+    const allFiles = await getAllFilesInDir(directory)
+    const allMovieFiles = allFiles.filter(
+      filterByExtension(VIDEO_FILE_EXTENSIONS)
     )
 
     let idx = 1
-    for (const file of allFiles) {
-      console.log(`Linting ${idx} of ${allFiles.length}`)
+    for (const file of allMovieFiles) {
+      console.log(`Linting ${idx} of ${allMovieFiles.length}`)
 
       const newPath = await getFixedTvEpisodePath(file.path)
 

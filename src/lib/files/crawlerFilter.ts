@@ -1,25 +1,25 @@
+import { Item } from 'klaw'
 import { extname } from 'path'
-import { getAllFilesInDir } from './crawler'
 
 /**
- * Gets all files in a directory recursively, filtered by file extensions
+ * Creates a predicate for filtering by file extension
+ * @example
+ * ```
+ * const videoFiles = allFiles.filter(filterByExtension(VIDEO_FILE_EXTENSIONS))
+ * ```
  */
-export const getAllFilesOfTypeInDir = async (
-  dir: string,
-  extensions: string[]
-) => {
-  const allFiles = await getAllFilesInDir(dir)
+export const filterByExtension = (extensions: string[]) => {
   const lowerExts = extensions.map((e) => e.toLowerCase())
 
-  const videoFiles = allFiles.filter((f) => {
-    const ext = extname(f.path)
+  const predicate = (file: Item) => {
+    const ext = extname(file.path)
 
     if (lowerExts.includes(ext.toLowerCase())) {
       return true
     } else {
       return false
     }
-  })
+  }
 
-  return videoFiles
+  return predicate
 }
