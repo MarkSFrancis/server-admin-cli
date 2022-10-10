@@ -49,6 +49,6 @@ yarn start --help
 ### Recommended Keys
 
 These resources are not required, and you can use as many or as few as you'd like.  
-Each one enhances this tool, but for just episode naming (e.g. `E01.mkv`), you won't need them.
+Each one enhances this tool, but for most commands, you won't need them. Run `--help` at the end of the command you want to find out which keys it might need
 
 - themoviedb.org API key (identifies the episode's title and other metadata). This is a [secret](#secrets), `TMDB_API_KEY`
