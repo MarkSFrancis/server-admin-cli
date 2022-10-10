@@ -1,4 +1,4 @@
-import { askUserForInput } from '@/lib/console'
+import { askUserForInput } from '../../console'
 import { mocked } from 'ts-jest/utils'
 import { getTvEpisodeNumber, getTvSeasonNumber } from './getTvMeta'
 
