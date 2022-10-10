@@ -33,7 +33,6 @@ export const getTvSeasonNumber = async (path: string): Promise<number> => {
   }
 
   while (seasonNumber < 0 || !Number.isInteger(seasonNumber)) {
-    console.log({ results })
     const seasonNumberText = await askUserForInput(
       `Could not auto-detect season for ${basename(
         path
@@ -73,7 +72,6 @@ export const getTvEpisodeNumber = async (path: string): Promise<number> => {
   }
 
   while (episodeNumber <= 0 || !Number.isInteger(episodeNumber)) {
-    console.log({ results })
     const episodeNumberText = await askUserForInput(
       `Could not auto-detect episode for ${name}. Please enter it manually: `
     )
