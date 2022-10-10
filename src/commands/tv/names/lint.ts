@@ -1,7 +1,7 @@
 import { Argument, Command, Option } from 'commander'
 import { filterByExtension } from '@/lib/files/crawlerFilter'
 import { VIDEO_FILE_EXTENSIONS } from '@/lib/files/exts'
-import { fixWindowsPath } from '@/lib/files/fixWindownPath'
+import { fixWindowsPath } from '@/lib/files/fixWindowsPath'
 import { getFixedTvEpisodePath } from '@/lib/files/tv/getFixedTvEpisodePath'
 import { moveFile } from '@/lib/files/moveFile'
 import { getAllFilesInDir } from '@/lib/files/crawler'
