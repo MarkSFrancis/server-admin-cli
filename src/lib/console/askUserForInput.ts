@@ -1,13 +1,8 @@
-import { createInterface, Interface } from 'readline'
-
-const getIO = () =>
-  createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  })
+import { Interface } from 'readline'
+import { getReadline } from './getReadline'
 
 export const askUserForInput = async (question: string) => {
-  const io = getIO()
+  const io = getReadline()
 
   try {
     const answer = await promiseQuestion(io, question)

@@ -1,8 +1,8 @@
-import { askUserForInput } from '../../console'
+import { askUserForInput } from '../../console/askUserForInput'
 import { mocked } from 'ts-jest/utils'
 import { getTvEpisodeNumber, getTvSeasonNumber } from './getTvMeta'
 
-jest.mock('../../console')
+jest.mock('../../console/askUserForInput')
 
 const askUserForInputMock = mocked(askUserForInput)
 

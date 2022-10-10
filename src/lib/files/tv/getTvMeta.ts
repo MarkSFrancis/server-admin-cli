@@ -1,5 +1,5 @@
 import { basename } from 'path'
-import { askUserForInput } from '../../console'
+import { askUserForInput } from '../../console/askUserForInput'
 import { distinct } from '../../distinct'
 
 export const getTvSeasonNumber = async (path: string): Promise<number> => {
