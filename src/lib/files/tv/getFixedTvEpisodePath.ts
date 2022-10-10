@@ -1,19 +1,5 @@
-import { mkdir, rename } from 'fs/promises'
 import { basename, dirname, extname, join } from 'path'
-import { pathExists } from '../fileExists'
 import { getTvSeasonNumber, getTvEpisodeNumber } from './getTvMeta'
-
-export const fixTvEpisodePath = async (oldPath: string, newPath: string) => {
-  await mkdir(dirname(newPath), { recursive: true })
-
-  if (await pathExists(newPath)) {
-    throw new Error('Path already exists and cannot be overwritten')
-  }
-
-  await rename(oldPath, newPath)
-
-  return newPath
-}
 
 export const getFixedTvEpisodePath = async (path: string) => {
   const seasonNumber = await getTvSeasonNumber(path)

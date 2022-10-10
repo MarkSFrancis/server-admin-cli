@@ -1,11 +1,9 @@
 import { Argument, Command, Option } from 'commander'
-import { getAllFilesOfTypeInDir } from '@/lib/files/crawler'
+import { getAllFilesOfTypeInDir } from '@/lib/files/crawlerFilter'
 import { VIDEO_FILE_EXTENSIONS } from '@/lib/files/exts'
 import { fixWindowsPath } from '@/lib/files/fixWindownPath'
-import {
-  fixTvEpisodePath,
-  getFixedTvEpisodePath,
-} from '@/lib/files/tv/setTvFileName'
+import { getFixedTvEpisodePath } from '@/lib/files/tv/getFixedTvEpisodePath'
+import { moveFile } from '@/lib/files/moveFile'
 
 export const tvNamesLintCommand = new Command('lint')
   .addArgument(
@@ -28,7 +26,7 @@ export const tvNamesLintCommand = new Command('lint')
 
       if (newPath !== file.path) {
         if (options.fix) {
-          await fixTvEpisodePath(file.path, newPath)
+          await moveFile(file.path, newPath, { overwrite: false })
 
           console.log(`Moved\n${file.path} to\n${newPath}\n`)
         } else {
