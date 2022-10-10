@@ -50,13 +50,9 @@ yarn start --help
 
 ## `docs`
 
-Opens the `server-admin-docs` in the browser
+Opens the [server-admin-docs](https://server-admin-docs.vercel.app/) in the browser
 
-## `sum`
-
-Adds a range of numbers together. Used as an example command
-
-## `tv names`
+## `tv names lint`
 
 Manages and structures media files in an opinionated way, for use with Plex
 
