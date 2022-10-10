@@ -13,7 +13,6 @@
     "test:all": "jest",
     "prepare": "husky install"
   },
-  "type": "commonjs",
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
     "@types/jest": "^27.5.0",
