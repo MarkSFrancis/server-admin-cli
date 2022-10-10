@@ -29,9 +29,9 @@ export const tvNamesLintCommand = new Command('lint')
         if (options.fix) {
           await moveFile(file.path, newPath, { overwrite: false })
 
-          console.log(`Moved\n${file.path} to\n${newPath}\n`)
+          console.log(`Moved\n${file.path}\nto\n${newPath}\n`)
         } else {
-          console.log(`Path\n${file.path} should be\n${newPath}\n`)
+          console.log(`Path\n${file.path}\nshould be\n${newPath}\n`)
         }
       }
 
