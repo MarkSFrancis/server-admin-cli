@@ -46,18 +46,6 @@ yarn install
 yarn start --help
 ```
 
-# Commands
-
-## `docs`
-
-Opens the [server-admin-docs](https://server-admin-docs.vercel.app/) in the browser
-
-## `tv names lint`
-
-Manages and structures media files in an opinionated way, for use with Plex
-
-This application is expected to be ran in an interactive terminal. It will ask the user questions to help resolve ambigious issues (such as being unable to determine the episode number for a file)
-
 ### Recommended Keys
 
 These resources are not required, and you can use as many or as few as you'd like.  
