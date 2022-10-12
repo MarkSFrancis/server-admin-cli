@@ -1,24 +1,13 @@
-import { Interface } from 'readline'
-import { getReadline } from './getReadline'
+import { prompt } from 'inquirer'
 
-export const askUserForInput = async (question: string) => {
-  const io = getReadline()
+export const consolePrompt = async (question: string) => {
+  const response = await prompt([
+    {
+      name: 'question',
+      message: question,
+      type: 'input',
+    },
+  ])
 
-  try {
-    const answer = await promiseQuestion(io, question)
-    return answer
-  } finally {
-    io.close()
-  }
-}
-
-async function promiseQuestion(
-  io: Interface,
-  question: string
-): Promise<string> {
-  return await new Promise<string>((resolve) => {
-    io.question(question, (answer) => {
-      resolve(answer)
-    })
-  })
+  return response.question as string
 }

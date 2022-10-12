@@ -15,8 +15,9 @@
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
+    "@types/glob": "^8.0.0",
+    "@types/inquirer": "^8",
     "@types/jest": "^29.1.2",
-    "@types/klaw": "^3.0.3",
     "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
@@ -45,7 +46,8 @@
     "axios": "^1.1.2",
     "commander": "^9.4.1",
     "dotenv": "^16.0.3",
-    "klaw": "^4.0.1",
+    "glob": "^8.0.3",
+    "inquirer": "^8",
     "open": "^8.4.0"
   }
 }
