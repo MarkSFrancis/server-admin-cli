@@ -1,6 +1,6 @@
 # Server Admin CLI
 
-Template project for a Typescript app designed to run on node 16
+This app is designed to help me to manage my server, via the CLI. It includes multiple commands focused on organising files and configuration
 
 [![Actions Status](https://github.com/MarkSFrancis/server-admin-cli/workflows/Build/badge.svg)](https://github.com/MarkSFrancis/server-admin-cli/actions)
 
