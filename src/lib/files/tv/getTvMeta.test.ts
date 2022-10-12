@@ -1,10 +1,9 @@
 import { askUserForInput } from '../../console/askUserForInput'
-import { mocked } from 'ts-jest/utils'
 import { getTvEpisodeNumber, getTvSeasonNumber } from './getTvMeta'
 
 jest.mock('../../console/askUserForInput')
 
-const askUserForInputMock = mocked(askUserForInput)
+const askUserForInputMock = jest.mocked(askUserForInput)
 
 describe('getTvSeasonNumber', () => {
   beforeEach(() => {

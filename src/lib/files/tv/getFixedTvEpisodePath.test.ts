@@ -1,11 +1,10 @@
-import { mocked } from 'ts-jest/utils'
 import { getFixedTvEpisodePath } from './getFixedTvEpisodePath'
 import { getTvEpisodeNumber, getTvSeasonNumber } from './getTvMeta'
 
 jest.mock('./getTvMeta')
 
-const getTvSeasonNumberMock = mocked(getTvSeasonNumber)
-const getTvEpisodeNumberMock = mocked(getTvEpisodeNumber)
+const getTvSeasonNumberMock = jest.mocked(getTvSeasonNumber)
+const getTvEpisodeNumberMock = jest.mocked(getTvEpisodeNumber)
 
 const defaults = {
   seasonNumber: 2,

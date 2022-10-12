@@ -1,12 +1,11 @@
 import { Interface } from 'readline'
-import { mocked } from 'ts-jest/utils'
 import { stub } from '../test-utils/stub'
 import { askUserForInput } from './askUserForInput'
 import { getReadline } from './getReadline'
 
 jest.mock('./getReadline')
 
-const getReadlineMock = mocked(getReadline)
+const getReadlineMock = jest.mocked(getReadline)
 const userTerminalResponseStub = 'test answer'
 
 describe('askUserForInput', () => {
