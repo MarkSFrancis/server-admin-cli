@@ -5,7 +5,7 @@ import { pathExists } from './pathExists'
 import { moveFile } from './moveFile'
 
 jest.mock('fs/promises')
-jest.mock('./fileExists')
+jest.mock('./pathExists')
 
 const mkdirMock = jest.mocked(mkdir)
 const renameMock = jest.mocked(rename)

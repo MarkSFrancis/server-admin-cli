@@ -19,7 +19,7 @@ export const filterByExtension = (extensions: string[]) => {
 export const pathMatchesExtension = (path: string, extensions: string[]) => {
   const ext = extname(path).toLowerCase()
 
-  if (extensions.find((e) => e.toLowerCase() === ext)) {
+  if (extensions.some((e) => e.toLowerCase() === ext)) {
     return true
   } else {
     return false
