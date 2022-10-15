@@ -1,5 +1,5 @@
-import { moveFile } from '@/lib/files/moveFile'
-import { getFixedTvEpisodePath } from '@/lib/files/tv/getFixedTvEpisodePath'
+import { moveFile } from '@/lib/paths/moveFile'
+import { getFixedTvEpisodePath } from '@/lib/paths/tv/getFixedTvEpisodePath'
 
 export const fixTvFilename = async (filePath: string) => {
   const newPath = await getFixedTvEpisodePath(filePath)

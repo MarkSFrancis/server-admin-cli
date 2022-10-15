@@ -1,4 +1,4 @@
-import { VIDEO_FILE_EXTENSIONS } from '@/lib/files/exts'
+import { VIDEO_FILE_EXTENSIONS } from '@/lib/paths/exts'
 import { extname } from 'path'
 
 export const isTvMediaFile = (path: string) => {

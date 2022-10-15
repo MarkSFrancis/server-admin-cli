@@ -1,12 +1,12 @@
-import { resolveGlob } from '@/lib/files/crawler'
-import { fixWindowsPath } from '@/lib/files/fixWindowsPath'
+import { resolveGlob } from '@/lib/fs/crawler'
+import { fixWindowsPath } from '@/lib/paths/fixWindowsPath'
 import { fixTvFilename } from '@/domain/tv/fixFilename'
 import { Argument, Command } from 'commander'
-import { pathMatchesExtension } from '@/lib/files/filterByExtension'
+import { pathMatchesExtension } from '@/lib/paths/filterByExtension'
 import {
   SUBTITLE_FILE_EXTENSIONS,
   VIDEO_FILE_EXTENSIONS,
-} from '@/lib/files/exts'
+} from '@/lib/paths/exts'
 
 export const tvOrganiseCommand = new Command('organise')
   .addArgument(new Argument('<glob>', 'the glob pattern to files to organise'))
