@@ -3,15 +3,18 @@ import { promisify } from 'util'
 
 const ffprobeAsync = promisify<string, FfprobeData>(ffprobe)
 
+/**
+ * The known types used by a stream's `codec_type`
+ */
 export enum STREAM_TYPES {
   audio = 'audio',
-  subtitles = 'subtitles',
+  subtitles = 'subtitle',
   video = 'video',
   data = 'data',
-  attachments = 'attachments',
+  attachments = 'attachment',
 }
 
-export const probeStreamsFromContainer = async (path: string) => {
+export const probeDataFromContainer = async (path: string) => {
   const result = await ffprobeAsync(path)
 
   return result
