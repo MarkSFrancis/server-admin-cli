@@ -1,18 +1,19 @@
-import { resolveGlob } from '@/lib/fs/crawler'
+import { resolveGlob } from '@/lib/fs/glob/resolveGlob'
 import {
   probeDataFromContainer,
   STREAM_TYPES,
 } from '@/lib/media-container/probeStreamsFromContainer'
-import { SUBTITLE_FILE_EXTENSIONS } from '@/lib/paths/exts'
-import { extname } from 'path'
+import { getExternalSubtitlesGlobs } from './getExternalSubtitlesGlobs'
 import { SubtitleStream } from './types'
 
 export const getExternalSubtitlesForMedia = async (
   path: string
 ): Promise<SubtitleStream[]> => {
-  const glob = getExternalSubtitlesGlob(path)
+  const globs = getExternalSubtitlesGlobs(path)
 
-  const externalSubtitlesPaths = await resolveGlob(glob)
+  const externalSubtitlesPaths = await Promise.all(
+    globs.map(async (g) => await resolveGlob(g))
+  ).then((r) => r.reduce((cur, next) => [...cur, ...next]))
 
   const allSubtitleStreams: SubtitleStream[] = []
 
@@ -31,15 +32,4 @@ export const getExternalSubtitlesForMedia = async (
   }
 
   return allSubtitleStreams
-}
-
-export const getExternalSubtitlesGlob = (path: string): string => {
-  const pathExt = extname(path)
-  const pathWithoutExt = path.substring(0, path.length - pathExt.length)
-
-  const subtitlesGlob = `${pathWithoutExt}*(${SUBTITLE_FILE_EXTENSIONS.join(
-    '|'
-  )})`
-
-  return subtitlesGlob
 }

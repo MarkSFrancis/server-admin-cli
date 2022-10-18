@@ -10,7 +10,7 @@ export const subtitlesStatusCommand = new Command('status')
   .addArgument(
     new Argument(
       '<glob>',
-      'the glob pattern to media files to get the status of subtitles for'
+      'the glob pattern to media files to review the subtitles for'
     )
   )
   .action(async (glob: string) => {

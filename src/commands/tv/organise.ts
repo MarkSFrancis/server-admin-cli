@@ -1,5 +1,3 @@
-import { resolveGlob } from '@/lib/fs/crawler'
-import { fixWindowsPath } from '@/lib/paths/fixWindowsPath'
 import { fixTvFilename } from '@/domain/tv/fixFilename'
 import { Argument, Command } from 'commander'
 import { pathMatchesExtension } from '@/lib/paths/filterByExtension'
@@ -7,13 +5,12 @@ import {
   SUBTITLE_FILE_EXTENSIONS,
   VIDEO_FILE_EXTENSIONS,
 } from '@/lib/paths/exts'
+import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
 
 export const tvOrganiseCommand = new Command('organise')
   .addArgument(new Argument('<glob>', 'the glob pattern to files to organise'))
-  .action(async (glob) => {
-    glob = fixWindowsPath(glob)
-
-    const allFiles = await resolveGlob(glob)
+  .action(async (glob: string) => {
+    const allFiles = await resolveWslGlob(glob)
 
     let idx = 1
     for (const filePath of allFiles) {
