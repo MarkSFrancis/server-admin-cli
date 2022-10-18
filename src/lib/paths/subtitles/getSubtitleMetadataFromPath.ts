@@ -1,6 +1,7 @@
 import { getLanguageFromCode } from '@/lib/language/getLanguageFromCode'
 import { SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream'
 import { basename, extname } from 'path'
+import { externalSubtitlesMetaFlags } from './externalSubtitlesMetaFlags'
 
 export const getSubtitleMetadataFromPath = (path: string): SubtitleMetadata => {
   const filenameWithExt = basename(path)
@@ -19,13 +20,13 @@ export const getSubtitleMetadataFromPath = (path: string): SubtitleMetadata => {
     const currentSuffix = extname(filenameWithoutSuffixes).toLowerCase()
 
     switch (currentSuffix) {
-      case '.cc':
+      case externalSubtitlesMetaFlags.closedCaptions:
         isClosedCaptions = true
         break
-      case '.sdh':
+      case externalSubtitlesMetaFlags.isSubtitlesForDeafAndHardOfHearing:
         isSubtitlesForDeafAndHardOfHearing = true
         break
-      case '.forced':
+      case externalSubtitlesMetaFlags.forced:
         isForced = true
         break
       default:

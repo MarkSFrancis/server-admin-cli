@@ -1,13 +1,23 @@
 import { getExternalSubtitlesForMedia } from './getExternalSubtitlesForMedia'
-import { getInternalSubtitlesFromContainer } from './getInternalSubtitlesFromContainer'
+import { getSubtitleStreamsFromContainer } from './getSubtitleStreamsFromContainer'
 import { SubtitleStream } from './types'
 
 export const getSubtitlesForMedia = async (
   path: string
 ): Promise<SubtitleStream[]> => {
-  const internalSubtitleStreams = await getInternalSubtitlesFromContainer(path)
+  const externalSubtitlePaths = await getExternalSubtitlesForMedia(path)
 
-  const externalSubtitleStreams = await getExternalSubtitlesForMedia(path)
+  const subtitleFileStreams = await Promise.all([
+    getSubtitleStreamsFromContainer(path),
+    ...externalSubtitlePaths.map(
+      async (p) => await getSubtitleStreamsFromContainer(p)
+    ),
+  ])
 
-  return [...internalSubtitleStreams, ...externalSubtitleStreams]
+  const subtitleStreams = subtitleFileStreams.reduce(
+    (cur, next) => [...cur, ...next],
+    []
+  )
+
+  return subtitleStreams
 }

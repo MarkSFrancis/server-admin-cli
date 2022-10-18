@@ -4,7 +4,7 @@ import {
 } from '@/lib/media-container/probeStreamsFromContainer'
 import { SubtitleStream } from './types'
 
-export const getInternalSubtitlesFromContainer = async (
+export const getSubtitleStreamsFromContainer = async (
   path: string
 ): Promise<SubtitleStream[]> => {
   const movieContainer = await probeDataFromContainer(path)

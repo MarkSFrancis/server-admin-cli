@@ -1,91 +1,56 @@
 import { resolveGlob } from '@/lib/fs/glob/resolveGlob'
-import { probeDataFromContainer } from '@/lib/media-container/probeStreamsFromContainer'
-import { stub } from '@/lib/test-utils/stub'
-import { FfprobeData } from 'fluent-ffmpeg'
 import { getExternalSubtitlesForMedia } from './getExternalSubtitlesForMedia'
 import { getExternalSubtitlesGlobs } from './getExternalSubtitlesGlobs'
-import { SubtitleStream } from './types'
 
-jest.mock('./getExternalSubtitlesGlob')
+jest.mock('./getExternalSubtitlesGlobs')
 jest.mock('@/lib/fs/glob/resolveGlob')
-jest.mock('@/lib/media-container/probeStreamsFromContainer')
 
-const getExternalSubtitlesGlobMock = jest.mocked(getExternalSubtitlesGlobs)
+const getExternalSubtitlesGlobsMock = jest.mocked(getExternalSubtitlesGlobs)
 const resolveGlobMock = jest.mocked(resolveGlob)
-const probeDataFromContainerMock = jest.mocked(probeDataFromContainer)
 
 beforeEach(() => {
   jest.resetAllMocks()
 
-  getExternalSubtitlesGlobMock.mockReturnValue('test-glob')
+  getExternalSubtitlesGlobsMock.mockReturnValue(['test-glob'])
   resolveGlobMock.mockResolvedValue([])
-  probeDataFromContainerMock.mockResolvedValue(
-    stub<FfprobeData>({
-      streams: [],
-    })
-  )
 })
 
 it('should get and execute glob', async () => {
-  getExternalSubtitlesGlobMock.mockReturnValue('file-glob')
+  getExternalSubtitlesGlobsMock.mockReturnValue(['file-glob'])
 
   await getExternalSubtitlesForMedia('/var/file.mkv')
 
-  expect(getExternalSubtitlesGlobMock).toHaveBeenCalledWith('/var/file.mkv')
+  expect(getExternalSubtitlesGlobsMock).toHaveBeenCalledWith('/var/file.mkv')
   expect(resolveGlobMock).toHaveBeenCalledWith('file-glob')
 })
 
-it('should iterate through each file, and probe its data', async () => {
-  const testFiles = ['/var/file.eng.srt', '/var/file.eng.cc.srt']
-  const testStreams = stub<FfprobeData[]>([
-    {
-      streams: [
-        {
-          codec_type: 'subtitle',
-        },
-      ],
-    },
-    {
-      streams: [
-        {
-          codec_type: 'subtitle',
-        },
-      ],
-    },
-  ])
+it('should get and execute each glob', async () => {
+  getExternalSubtitlesGlobsMock.mockReturnValue(['file-glob', 'file-glob-2'])
 
-  resolveGlobMock.mockResolvedValue(testFiles)
-  probeDataFromContainerMock.mockResolvedValueOnce(testStreams[0])
-  probeDataFromContainerMock.mockResolvedValueOnce(testStreams[1])
+  await getExternalSubtitlesForMedia('/var/file.mkv')
 
-  const streams = await getExternalSubtitlesForMedia('/var/file.mkv')
-
-  expect(streams).toEqual<SubtitleStream[]>([
-    {
-      streamContainerPath: testFiles[0],
-      stream: testStreams[0].streams[0],
-    },
-    {
-      streamContainerPath: testFiles[1],
-      stream: testStreams[1].streams[0],
-    },
-  ])
+  expect(getExternalSubtitlesGlobsMock).toHaveBeenCalledWith('/var/file.mkv')
+  expect(resolveGlobMock).toHaveBeenCalledWith('file-glob')
+  expect(resolveGlobMock).toHaveBeenCalledWith('file-glob-2')
 })
 
-it('should skip non-subtitle streams', async () => {
-  const testFile = '/var/file.eng.srt'
-  const testStream = stub<FfprobeData>({
-    streams: [
-      {
-        codec_type: 'attachment',
-      },
-    ],
+it('should return all found paths', async () => {
+  getExternalSubtitlesGlobsMock.mockReturnValue(['file-glob-1', 'file-glob-2'])
+  resolveGlobMock.mockImplementation(async (glob) => {
+    if (glob === 'file-glob-1') {
+      return ['file-1', 'file-2']
+    } else if (glob === 'file-glob-2') {
+      return ['file-3', 'file-4', 'file-5']
+    } else {
+      throw new Error('Called with non-test glob')
+    }
   })
 
-  resolveGlobMock.mockResolvedValue([testFile])
-  probeDataFromContainerMock.mockResolvedValue(testStream)
+  const results = await getExternalSubtitlesForMedia('/var/file.mvk')
 
-  const streams = await getExternalSubtitlesForMedia('/var/file.mkv')
-
-  expect(streams).toEqual<SubtitleStream[]>([])
+  expect(results).toContain('file-1')
+  expect(results).toContain('file-2')
+  expect(results).toContain('file-3')
+  expect(results).toContain('file-4')
+  expect(results).toContain('file-5')
 })
