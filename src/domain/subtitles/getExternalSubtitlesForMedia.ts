@@ -1,5 +1,5 @@
 import { resolveGlob } from '@/lib/fs/glob/resolveGlob'
-import { getExternalSubtitlesGlobs } from './getExternalSubtitlesGlobs'
+import { getExternalSubtitlesGlobs } from '@/lib/paths/subtitles/getExternalSubtitlesGlobs'
 
 export const getExternalSubtitlesForMedia = async (
   path: string

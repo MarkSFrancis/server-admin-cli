@@ -3,7 +3,7 @@ import { pathMatchesExtension } from '@/lib/paths/filterByExtension'
 import { Argument, Command } from 'commander'
 import { basename } from 'path'
 import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
-import { getSubtitlesForMedia } from '@/domain/subtitles/getSubtitles'
+import { getSubtitlesForMedia } from '@/domain/subtitles/getSubtitlesForMedia'
 
 export const subtitlesReviewCommand = new Command('review')
   .addArgument(

@@ -1,8 +1,8 @@
 import { resolveGlob } from '@/lib/fs/glob/resolveGlob'
+import { getExternalSubtitlesGlobs } from '@/lib/paths/subtitles/getExternalSubtitlesGlobs'
 import { getExternalSubtitlesForMedia } from './getExternalSubtitlesForMedia'
-import { getExternalSubtitlesGlobs } from './getExternalSubtitlesGlobs'
 
-jest.mock('./getExternalSubtitlesGlobs')
+jest.mock('@/lib/paths/subtitles/getExternalSubtitlesGlobs')
 jest.mock('@/lib/fs/glob/resolveGlob')
 
 const getExternalSubtitlesGlobsMock = jest.mocked(getExternalSubtitlesGlobs)

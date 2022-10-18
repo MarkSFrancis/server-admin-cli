@@ -1,10 +1,10 @@
-import { probeDataFromContainer } from '@/lib/media-container/probeStreamsFromContainer'
+import { probeDataFromContainer } from '../probeStreamsFromContainer'
 import { stub } from '@/lib/test-utils/stub'
 import { FfprobeData } from 'fluent-ffmpeg'
 import { getSubtitleStreamsFromContainer } from './getSubtitleStreamsFromContainer'
 import { SubtitleStream } from './types'
 
-jest.mock('@/lib/media-container/probeStreamsFromContainer')
+jest.mock('../probeStreamsFromContainer')
 
 const probeDataFromContainerMock = jest.mocked(probeDataFromContainer)
 

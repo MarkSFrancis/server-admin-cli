@@ -14,8 +14,8 @@ export const fixExternalSubtitlesFilename = async (
   for (const filePath of externalSubtitlesPaths) {
     const subtitleMeta = getSubtitleMetadataFromPath(filePath)
 
-    // TODO - if no language is found, ask the user
-    // TODO - if no cc / sdh / forced is found, ask the user
+    // TODO - if no language is found, guess, and ask the user
+    // TODO - if no cc / sdh / forced is found, guess, and ask the user
 
     const fixedPath = getFixedExternalSubtitlesPath(newMediaPath, subtitleMeta)
 
