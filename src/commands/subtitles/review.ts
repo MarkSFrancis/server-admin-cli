@@ -5,7 +5,7 @@ import { basename } from 'path'
 import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
 import { getSubtitlesForMedia } from '@/domain/subtitles/getSubtitles'
 
-export const subtitlesStatusCommand = new Command('status')
+export const subtitlesReviewCommand = new Command('review')
   .addArgument(
     new Argument(
       '<glob>',
@@ -18,7 +18,9 @@ export const subtitlesStatusCommand = new Command('status')
     let idx = 1
     for (const filePath of allFiles) {
       console.log(
-        `Getting status of ${basename(filePath)} (${idx} of ${allFiles.length})`
+        `Reviewing subtitles for ${basename(filePath)} (${idx} of ${
+          allFiles.length
+        })`
       )
 
       if (!pathMatchesExtension(filePath, VIDEO_FILE_EXTENSIONS)) {
