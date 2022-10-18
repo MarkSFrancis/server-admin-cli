@@ -1,10 +1,9 @@
-import { getExternalSubtitlesForMedia } from '@/domain/subtitles/getExternalSubtitlesForMedia'
-import { getInternalSubtitlesFromContainer } from '@/domain/subtitles/getInternalSubtitlesFromContainer'
 import { VIDEO_FILE_EXTENSIONS } from '@/lib/paths/exts'
 import { pathMatchesExtension } from '@/lib/paths/filterByExtension'
 import { Argument, Command } from 'commander'
 import { basename } from 'path'
 import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
+import { getSubtitlesForMedia } from '@/domain/subtitles/getSubtitles'
 
 export const subtitlesStatusCommand = new Command('status')
   .addArgument(
@@ -27,20 +26,23 @@ export const subtitlesStatusCommand = new Command('status')
       } else {
         console.log(`Analysing:\n${filePath}`)
 
-        const internalSubs = await getInternalSubtitlesFromContainer(filePath)
-        const externalSubs = await getExternalSubtitlesForMedia(filePath)
+        const subtitles = await getSubtitlesForMedia(filePath)
 
-        if (internalSubs.length === 0 && externalSubs.length === 0) {
+        if (subtitles.length === 0) {
           console.log(`Subtitles not found`)
         } else {
+          const internalSubs = subtitles.filter(
+            (s) => s.streamContainerPath === filePath
+          )
+          const externalSubs = subtitles.filter(
+            (s) => s.streamContainerPath !== filePath
+          )
+
           console.log(
             `${internalSubs.length} internal and ${externalSubs.length} external subs found`
           )
 
-          for (const sub of internalSubs) {
-            console.log(JSON.stringify(sub, null, 2))
-          }
-          for (const sub of externalSubs) {
+          for (const sub of subtitles) {
             console.log(JSON.stringify(sub, null, 2))
           }
         }
