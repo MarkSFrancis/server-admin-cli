@@ -1,4 +1,4 @@
-import { getLanguageFromCode } from '@/lib/language/getLanguageFromCode'
+import { findLanguageByCode } from '@/lib/language/findLanguageByCode'
 import { SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream'
 import { basename, extname } from 'path'
 import { externalSubtitlesMetaFlags } from './externalSubtitlesMetaFlags'
@@ -6,20 +6,21 @@ import { externalSubtitlesMetaFlags } from './externalSubtitlesMetaFlags'
 export const getSubtitleMetadataFromPath = (path: string): SubtitleMetadata => {
   const filenameWithExt = basename(path)
   const extension = extname(filenameWithExt)
-  let filenameWithoutSuffixes = filenameWithExt
+  let remainingFileNameToParse = filenameWithExt
     .substring(0, filenameWithExt.length - extension.length)
     .toLowerCase()
 
-  let isClosedCaptions = false
-  let isSubtitlesForDeafAndHardOfHearing = false
-  let isForced = false
+  let isClosedCaptions: boolean | undefined
+  let isSubtitlesForDeafAndHardOfHearing: boolean | undefined
+  let isForced: boolean | undefined
   let language: string | undefined
   let isFilenameSuffixesParsed = false
 
   do {
-    const currentSuffix = extname(filenameWithoutSuffixes).toLowerCase()
+    const subtitleFileNameFlags = getNextFlag(remainingFileNameToParse)
+    console.log({ subtitleFileNameFlags })
 
-    switch (currentSuffix) {
+    switch (subtitleFileNameFlags.currentFlag) {
       case externalSubtitlesMetaFlags.closedCaptions:
         isClosedCaptions = true
         break
@@ -31,12 +32,12 @@ export const getSubtitleMetadataFromPath = (path: string): SubtitleMetadata => {
         break
       default:
         if (!language) {
-          const possibleLanguage = getLanguageFromCode(
-            currentSuffix.substring(1)
+          const possibleLanguage = findLanguageByCode(
+            subtitleFileNameFlags.currentFlag
           )
 
           if (possibleLanguage) {
-            language = currentSuffix.substring(1)
+            language = subtitleFileNameFlags.currentFlag
             break
           }
         }
@@ -45,16 +46,34 @@ export const getSubtitleMetadataFromPath = (path: string): SubtitleMetadata => {
         break
     }
 
-    filenameWithoutSuffixes = filenameWithoutSuffixes.substring(
-      0,
-      filenameWithoutSuffixes.length - currentSuffix.length
-    )
+    remainingFileNameToParse = subtitleFileNameFlags.remainingFileName
   } while (!isFilenameSuffixesParsed)
 
   return {
-    closedCaptions: isClosedCaptions || isSubtitlesForDeafAndHardOfHearing,
-    forced: isForced,
+    isClosedCaptions: isClosedCaptions ?? isSubtitlesForDeafAndHardOfHearing,
+    isForced,
     language,
     codec: extension.length === 0 ? undefined : extension.substring(1),
+  }
+}
+
+const getNextFlag = (
+  fileName: string
+): { currentFlag: string; remainingFileName: string } => {
+  const nextFlagStart = Math.max(
+    fileName.lastIndexOf('.'),
+    fileName.lastIndexOf('_')
+  )
+
+  if (nextFlagStart === -1) {
+    return {
+      currentFlag: fileName.toLowerCase(),
+      remainingFileName: '',
+    }
+  }
+
+  return {
+    currentFlag: fileName.substring(nextFlagStart + 1).toLowerCase(),
+    remainingFileName: fileName.substring(0, nextFlagStart),
   }
 }

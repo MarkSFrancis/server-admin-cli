@@ -5,11 +5,11 @@ export interface SubtitleMetadata {
   title?: string
   codec?: string
   default?: boolean
-  forced?: boolean
+  isForced?: boolean
   /**
    * For the purposes of this metadata parser, I'm treating closed captions as synonymous to subtitles for the deaf and hard of hearing
    */
-  closedCaptions?: boolean
+  isClosedCaptions?: boolean
   language?: string
 }
 
@@ -21,8 +21,8 @@ export const getSubtitleMetadataFromStream = (
   return {
     language,
     default: isSet(stream.disposition?.default),
-    closedCaptions: isSet(stream.disposition?.hearing_impaired),
-    forced: isSet(stream?.disposition?.forced),
+    isClosedCaptions: isSet(stream.disposition?.hearing_impaired),
+    isForced: isSet(stream?.disposition?.forced),
     title: stream.tags?.title,
     codec: stream.codec_name,
   }

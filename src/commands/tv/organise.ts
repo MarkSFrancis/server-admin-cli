@@ -10,6 +10,8 @@ export const tvOrganiseCommand = new Command('organise')
   .action(async (glob: string) => {
     const allFiles = await resolveWslGlob(glob)
 
+    console.log(`${allFiles.length} files found matching the specified pattern`)
+
     let idx = 1
     for (const filePath of allFiles) {
       console.log(`Organising ${idx} of ${allFiles.length}`)

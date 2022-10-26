@@ -1,5 +1,5 @@
 export enum externalSubtitlesMetaFlags {
-  forced = '.forced',
-  closedCaptions = '.cc',
-  isSubtitlesForDeafAndHardOfHearing = '.sdh',
+  forced = 'forced',
+  closedCaptions = 'cc',
+  isSubtitlesForDeafAndHardOfHearing = 'sdh',
 }

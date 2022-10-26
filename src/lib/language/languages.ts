@@ -76,14 +76,4 @@ export interface Language {
   iso6391?: string | undefined
 }
 
-/**
- * Converts a language code to a language if it's recognised against ISO-639-1, ISO-639-2/B, or ISO-639-2/T standards
- * @param code The language code to search for
- */
-export const getLanguageFromCode = (code: string): Language | undefined => {
-  const languageMatch = iso6393.find(
-    (l) => l.iso6391 === code || l.iso6392B === code || l.iso6392T === code
-  ) as Language
-
-  return languageMatch
-}
+export const Iso6393Languages = iso6393 as Language[]

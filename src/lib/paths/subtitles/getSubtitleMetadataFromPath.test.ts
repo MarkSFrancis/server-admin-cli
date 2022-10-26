@@ -24,36 +24,36 @@ it('should set `codec` to `undefined` if no extension is present', () => {
   expect(metadata.codec).toBeUndefined()
 })
 
-it('should set `forced` to `true` when using ".forced"', () => {
+it.only('should set `forced` to `true` when using ".forced"', () => {
   const metadata = getSubtitleMetadataFromPath('/var/file.forced.srt')
 
-  expect(metadata.forced).toBeTruthy()
+  expect(metadata.isForced).toBeTruthy()
 })
 
 it('should set `closedCaptions` to `true` when using ".cc"', () => {
   const metadata = getSubtitleMetadataFromPath('/var/file.cc.srt')
 
-  expect(metadata.closedCaptions).toBeTruthy()
+  expect(metadata.isClosedCaptions).toBeTruthy()
 })
 
 it('should set `closedCaptions` to `true` when using ".sdh"', () => {
   const metadata = getSubtitleMetadataFromPath('/var/file.sdh.srt')
 
-  expect(metadata.closedCaptions).toBeTruthy()
+  expect(metadata.isClosedCaptions).toBeTruthy()
 })
 
 it('should set `closedCaptions` and forced to `true` when both are set in the path', () => {
   const metadata = getSubtitleMetadataFromPath('/var/file.cc.forced.srt')
 
-  expect(metadata.closedCaptions).toBeTruthy()
-  expect(metadata.forced).toBeTruthy()
+  expect(metadata.isClosedCaptions).toBeTruthy()
+  expect(metadata.isForced).toBeTruthy()
 })
 
 it('should set `closedCaptions` and `forced` to `false` when not set in the path', () => {
   const metadata = getSubtitleMetadataFromPath('/var/file.srt')
 
-  expect(metadata.closedCaptions).toBeFalsy()
-  expect(metadata.forced).toBeFalsy()
+  expect(metadata.isClosedCaptions).toBeFalsy()
+  expect(metadata.isForced).toBeFalsy()
 })
 
 it('should set `language` to `undefined` when unspecified', () => {

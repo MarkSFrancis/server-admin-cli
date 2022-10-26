@@ -12,7 +12,7 @@ export const resolveWslGlob = async (glob: string) => {
 
 export const fixWslGlob = (glob: string) => {
   let fixedGlob = fixWslPath(glob)
-  fixedGlob = fixWindowsGlob(glob)
+  fixedGlob = fixWindowsGlob(fixedGlob)
 
   return fixedGlob
 }
