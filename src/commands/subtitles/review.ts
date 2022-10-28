@@ -17,21 +17,21 @@ export const subtitlesReviewCommand = new Command('review')
 
     let idx = 1
     for (const filePath of allFiles) {
-      console.log(
+      console.info(
         `Reviewing subtitles for ${basename(filePath)} (${idx} of ${
           allFiles.length
         })`
       )
 
       if (!pathMatchesExtension(filePath, VIDEO_FILE_EXTENSIONS)) {
-        console.log(`Skipped\n${filePath}\n as it's not a video file`)
+        console.info(`Skipped\n${filePath}\n as it's not a video file`)
       } else {
-        console.log(`Analysing:\n${filePath}`)
+        console.info(`Analysing:\n${filePath}`)
 
         const subtitles = await getSubtitlesForMedia(filePath)
 
         if (subtitles.length === 0) {
-          console.log(`Subtitles not found`)
+          console.info(`Subtitles not found`)
         } else {
           const internalSubs = subtitles.filter(
             (s) => s.streamContainerPath === filePath
@@ -40,17 +40,17 @@ export const subtitlesReviewCommand = new Command('review')
             (s) => s.streamContainerPath !== filePath
           )
 
-          console.log(
+          console.info(
             `${internalSubs.length} internal and ${externalSubs.length} external subs found`
           )
 
           for (const sub of subtitles) {
-            console.log(JSON.stringify(sub, null, 2))
+            console.info(JSON.stringify(sub, null, 2))
           }
         }
       }
 
       idx++
-      console.log('')
+      console.info('')
     }
   })

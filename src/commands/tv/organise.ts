@@ -10,20 +10,22 @@ export const tvOrganiseCommand = new Command('organise')
   .action(async (glob: string) => {
     const allFiles = await resolveWslGlob(glob)
 
-    console.log(`${allFiles.length} files found matching the specified pattern`)
+    console.info(
+      `${allFiles.length} files found matching the specified pattern`
+    )
 
     let idx = 1
     for (const filePath of allFiles) {
-      console.log(`Organising ${idx} of ${allFiles.length}`)
+      console.info(`Organising ${idx} of ${allFiles.length}`)
 
       if (pathMatchesExtension(filePath, VIDEO_FILE_EXTENSIONS)) {
         const newPath = await fixTvFilename(filePath)
-        console.log(`Moved\n${filePath}\nto\n${newPath}\n`)
+        console.info(`Moved\n${filePath}\nto\n${newPath}\n`)
 
         await fixExternalSubtitlesFilename(filePath, newPath)
-        console.log(`Moved subtitles for\n${filePath}\n`)
+        console.info(`Moved subtitles for\n${filePath}\n`)
       } else {
-        console.log(`Skipped\n${filePath}\n as it's not a video file`)
+        console.info(`Skipped\n${filePath}\n as it's not a video file`)
       }
 
       idx++

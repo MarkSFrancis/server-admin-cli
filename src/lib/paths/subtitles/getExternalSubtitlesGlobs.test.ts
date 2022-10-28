@@ -27,7 +27,6 @@ it('matches sibling subtitles', () => {
   const patterns = getExternalSubtitlesGlobs('/var/file1.mkv')
 
   const matches = patterns.find((p) => minimatch('/var/file1.eng.srt', p))
-  console.log({ matches, patterns })
 
   expect(matches).toBeTruthy()
 })

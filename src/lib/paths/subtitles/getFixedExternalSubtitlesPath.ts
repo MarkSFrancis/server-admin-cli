@@ -5,7 +5,8 @@ import { extname } from 'path'
 
 export const getFixedExternalSubtitlesPath = (
   pairedMediaPath: string,
-  subsMeta: SubtitleMetadata
+  subsMeta: SubtitleMetadata,
+  copyNumber = 1
 ) => {
   if (!subsMeta.codec) {
     throw new Error(
@@ -14,10 +15,14 @@ export const getFixedExternalSubtitlesPath = (
   }
 
   const mediaExt = extname(pairedMediaPath)
-  const mediaPathWithoutExt = pairedMediaPath.substring(
+  let mediaPathWithoutExt = pairedMediaPath.substring(
     0,
     pairedMediaPath.length - mediaExt.length
   )
+
+  if (copyNumber !== 1) {
+    mediaPathWithoutExt += ` (${copyNumber})`
+  }
 
   let flags = ''
 

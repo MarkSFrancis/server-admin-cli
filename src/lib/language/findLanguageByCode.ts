@@ -5,6 +5,11 @@ import { Language, Iso6393Languages } from './languages'
  * @param code The language code to search for
  */
 export const findLanguageByCode = (code: string): Language | undefined => {
+  if (code.toUpperCase() === 'GREEK') {
+    // Default to modern greek
+    return findLanguageByCode('gre')
+  }
+
   const languageMatch = Iso6393Languages.find(
     (l) =>
       l.iso6391 === code ||

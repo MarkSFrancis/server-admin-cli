@@ -5,7 +5,7 @@ interface FfmpegProgress {
 }
 
 export const runFfmpeg = async (command: FfmpegCommand) => {
-  console.log(
+  console.info(
     `Executing: ffmpeg `,
     command
       ._getArguments()
@@ -18,7 +18,7 @@ export const runFfmpeg = async (command: FfmpegCommand) => {
       reject(err)
     })
     command.on('progress', (data: FfmpegProgress) => {
-      console.log(`Processing: ${data.percent}% done`)
+      console.info(`Processing: ${data.percent}% done`)
     })
     command.on('end', () => {
       resolve()

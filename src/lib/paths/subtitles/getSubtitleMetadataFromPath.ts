@@ -18,7 +18,6 @@ export const getSubtitleMetadataFromPath = (path: string): SubtitleMetadata => {
 
   do {
     const subtitleFileNameFlags = getNextFlag(remainingFileNameToParse)
-    console.log({ subtitleFileNameFlags })
 
     switch (subtitleFileNameFlags.currentFlag) {
       case externalSubtitlesMetaFlags.closedCaptions:

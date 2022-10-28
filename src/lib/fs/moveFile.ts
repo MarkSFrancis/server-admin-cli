@@ -17,7 +17,9 @@ export const moveFile = async (
 
   if (!options.overwrite) {
     if (await pathExists(newPath)) {
-      throw new Error('Path already exists and cannot be overwritten')
+      throw new Error(
+        `Path ${newPath} already exists and cannot be overwritten`
+      )
     }
   }
 

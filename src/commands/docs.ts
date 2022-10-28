@@ -5,6 +5,6 @@ import open from 'open'
 export const docsCommand = new Command('docs')
   .description('open the docs')
   .action(async () => {
-    console.log('Opening docs...')
+    console.info('Opening docs...')
     await open(DOCS_BASE_URL)
   })
