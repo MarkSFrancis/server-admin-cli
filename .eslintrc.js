@@ -16,5 +16,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/array-type': ['error', { default: 'array' }],
+    'no-console': ['warn', { allow: ['info', 'warn', 'error', 'trace'] }],
   },
 }
