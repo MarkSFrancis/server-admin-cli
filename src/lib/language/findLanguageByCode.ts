@@ -9,9 +9,9 @@ export const findLanguageByCode = (code: string): Language | undefined => {
 
   const languageMatch = Iso6393Languages.find(
     (l) =>
-      l.iso6391 === normalizedCode ||
-      l.iso6392B === normalizedCode ||
-      l.iso6392T === normalizedCode ||
+      l.iso6391?.toUpperCase() === normalizedCode ||
+      l.iso6392B?.toUpperCase() === normalizedCode ||
+      l.iso6392T?.toUpperCase() === normalizedCode ||
       l.name.toUpperCase() === normalizedCode
   )
 
