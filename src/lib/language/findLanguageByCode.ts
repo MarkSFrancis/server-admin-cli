@@ -5,18 +5,29 @@ import { Language, Iso6393Languages } from './languages'
  * @param code The language code to search for
  */
 export const findLanguageByCode = (code: string): Language | undefined => {
-  if (code.toUpperCase() === 'GREEK') {
-    // Default to modern greek
-    return findLanguageByCode('gre')
-  }
+  const normalizedCode = normalizeLanguageCode(code)
 
   const languageMatch = Iso6393Languages.find(
     (l) =>
-      l.iso6391 === code ||
-      l.iso6392B === code ||
-      l.iso6392T === code ||
-      l.name.toUpperCase() === code.toUpperCase()
+      l.iso6391 === normalizedCode ||
+      l.iso6392B === normalizedCode ||
+      l.iso6392T === normalizedCode ||
+      l.name.toUpperCase() === normalizedCode
   )
 
   return languageMatch
+}
+
+const normalizeLanguageCode = (code: string) => {
+  const normalized = code.toUpperCase()
+
+  switch (normalized) {
+    case 'GREEK':
+      // Default to modern greek
+      return 'MODERN GREEK (1453-)'
+    case 'BOKMAL':
+      return 'NORWEGIAN BOKMÅL'
+    default:
+      return normalized
+  }
 }
