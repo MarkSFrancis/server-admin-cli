@@ -18,10 +18,13 @@ export const findLanguageByCode = (code: string): Language | undefined => {
   return languageMatch
 }
 
-const normalizeLanguageCode = (code: string) => {
-  const normalized = code.toUpperCase()
+const normalizeLanguageCode = (code: string): Uppercase<string> => {
+  const normalized = code.toUpperCase() as Uppercase<string>
 
   switch (normalized) {
+    case 'EN':
+      // Default to english
+      return 'ENG'
     case 'GREEK':
       // Default to modern greek
       return 'MODERN GREEK (1453-)'

@@ -1,5 +1,17 @@
 import { findLanguageByCode } from './findLanguageByCode'
 
+it('should return English for "en"', () => {
+  const language = findLanguageByCode('en')
+
+  expect(language?.name).toEqual('English')
+})
+
+it('should return English for "eng"', () => {
+  const language = findLanguageByCode('eng')
+
+  expect(language?.name).toEqual('English')
+})
+
 it('should return English for "English"', () => {
   const language = findLanguageByCode('English')
 
