@@ -1,18 +1,20 @@
 import { VIDEO_FILE_EXTENSIONS } from '@/lib/paths/exts'
 import { pathMatchesExtension } from '@/lib/paths/filterByExtension'
-import { Argument, Command } from 'commander'
+import { Command, Option } from 'commander'
 import { basename } from 'path'
 import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
 import { getSubtitlesForMedia } from '@/domain/subtitles/getSubtitlesForMedia'
+import { promptForMediaGlob } from '@/lib/console/promptUserForPath'
 
 export const subtitlesReviewCommand = new Command('review')
-  .addArgument(
-    new Argument(
-      '<glob>',
+  .addOption(
+    new Option(
+      '-g, --glob <string>',
       'the glob pattern to media files to review the subtitles for'
     )
   )
-  .action(async (glob: string) => {
+  .action(async (options: { glob?: string }) => {
+    const glob = options.glob ?? (await promptForMediaGlob())
     const allFiles = await resolveWslGlob(glob)
 
     let idx = 1

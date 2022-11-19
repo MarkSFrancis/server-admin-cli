@@ -1,14 +1,14 @@
-import { consolePrompt } from '../../console/askUserForInput'
+import { promptUserForInput } from '../../console/promptUserForInput'
 import { getTvSeasonNumber } from './getTvSeasonNumber'
 
-jest.mock('../../console/askUserForInput')
+jest.mock('../../console/promptUserForInput')
 
-const askUserForInputMock = jest.mocked(consolePrompt)
+const promptUserForInputMock = jest.mocked(promptUserForInput)
 
 beforeEach(() => {
   jest.resetAllMocks()
 
-  askUserForInputMock.mockRejectedValue(
+  promptUserForInputMock.mockRejectedValue(
     new Error('Mock should not have been called')
   )
 })
@@ -38,24 +38,24 @@ it('should return 2 when the basename includes "Season 2"', async () => {
 })
 
 it('should ask for input when the path and basename include conflicting season IDs', async () => {
-  askUserForInputMock.mockResolvedValue('5')
+  promptUserForInputMock.mockResolvedValue('5')
   const seasonNumber = await getTvSeasonNumber('/S01/Season 2 E01.mkv')
 
-  expect(askUserForInputMock).toHaveBeenCalledTimes(1)
+  expect(promptUserForInputMock).toHaveBeenCalledTimes(1)
   expect(seasonNumber).toEqual(5)
 })
 
 it('should ask for input when no season IDs are found', async () => {
-  askUserForInputMock.mockResolvedValue('5')
+  promptUserForInputMock.mockResolvedValue('5')
   const seasonNumber = await getTvSeasonNumber('/E01.mkv')
 
-  expect(askUserForInputMock).toHaveBeenCalledTimes(1)
+  expect(promptUserForInputMock).toHaveBeenCalledTimes(1)
   expect(seasonNumber).toEqual(5)
 })
 
 it('should use season when the path and basename include matching season IDs', async () => {
   const seasonNumber = await getTvSeasonNumber('/S02/Season 2 E01.mkv')
 
-  expect(askUserForInputMock).toHaveBeenCalledTimes(0)
+  expect(promptUserForInputMock).toHaveBeenCalledTimes(0)
   expect(seasonNumber).toEqual(2)
 })

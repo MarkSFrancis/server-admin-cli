@@ -1,5 +1,5 @@
 import { basename } from 'path'
-import { consolePrompt } from '../../console/askUserForInput'
+import { promptUserForInput } from '../../console/promptUserForInput'
 import { distinct } from '../../distinct'
 
 export const getTvEpisodeNumber = async (path: string): Promise<number> => {
@@ -29,7 +29,7 @@ export const getTvEpisodeNumber = async (path: string): Promise<number> => {
   }
 
   while (episodeNumber <= 0 || !Number.isInteger(episodeNumber)) {
-    const episodeNumberText = await consolePrompt(
+    const episodeNumberText = await promptUserForInput(
       `Could not auto-detect episode for ${name}. Please enter it manually: `
     )
 

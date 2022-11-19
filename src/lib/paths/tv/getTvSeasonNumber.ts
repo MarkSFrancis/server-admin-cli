@@ -1,5 +1,5 @@
 import { basename } from 'path'
-import { consolePrompt } from '../../console/askUserForInput'
+import { promptUserForInput } from '../../console/promptUserForInput'
 import { distinct } from '../../distinct'
 
 export const getTvSeasonNumber = async (path: string): Promise<number> => {
@@ -33,7 +33,7 @@ export const getTvSeasonNumber = async (path: string): Promise<number> => {
   }
 
   while (seasonNumber < 0 || !Number.isInteger(seasonNumber)) {
-    const seasonNumberText = await consolePrompt(
+    const seasonNumberText = await promptUserForInput(
       `Could not auto-detect season for ${basename(
         path
       )}. Please enter it manually: `

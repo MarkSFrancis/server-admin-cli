@@ -1,6 +1,6 @@
 import { prompt } from 'inquirer'
 
-export const consolePrompt = async (question: string) => {
+export const promptUserForInput = async (question: string) => {
   const response = await prompt([
     {
       name: 'question',
