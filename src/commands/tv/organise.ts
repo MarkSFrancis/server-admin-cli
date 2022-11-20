@@ -4,7 +4,7 @@ import { pathMatchesExtension } from '@/lib/paths/filterByExtension'
 import { VIDEO_FILE_EXTENSIONS } from '@/lib/paths/exts'
 import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
 import { fixExternalSubtitlesFilename } from '@/domain/subtitles/fixSubtitlesFilename'
-import { promptForMediaGlob } from '@/lib/console/promptUserForPath'
+import { promptForMediaGlob } from '@/lib/console/promptForMediaGlob'
 
 export const tvOrganiseCommand = new Command('organise')
   .addOption(

@@ -4,7 +4,7 @@ import { Command, Option } from 'commander'
 import { basename } from 'path'
 import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
 import { getSubtitlesForMedia } from '@/domain/subtitles/getSubtitlesForMedia'
-import { promptForMediaGlob } from '@/lib/console/promptUserForPath'
+import { promptForMediaGlob } from '@/lib/console/promptForMediaGlob'
 
 export const subtitlesReviewCommand = new Command('review')
   .addOption(
