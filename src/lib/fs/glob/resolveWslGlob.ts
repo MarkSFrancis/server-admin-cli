@@ -1,4 +1,3 @@
-import { fixWindowsGlob } from './fixWindowsGlob'
 import { fixWslPath } from './fixWslPath'
 import { resolveGlob } from './resolveGlob'
 
@@ -11,8 +10,7 @@ export const resolveWslGlob = async (glob: string) => {
 }
 
 export const fixWslGlob = (glob: string) => {
-  let fixedGlob = fixWslPath(glob)
-  fixedGlob = fixWindowsGlob(fixedGlob)
+  const fixedGlob = fixWslPath(glob)
 
   return fixedGlob
 }

@@ -1,7 +1,7 @@
 import { prompt, Separator } from 'inquirer'
 import { basename } from 'path'
 import { getSubfolders } from '../fs/getSubfolders'
-import { escapeForGlob } from '../fs/glob/escapeForGlob'
+import { convertPathToGlob } from '../fs/glob/convertPathToGlob'
 import { SpecialFolders } from '../paths/SpeciaFolders'
 import { promptForInput } from './promptForInput'
 
@@ -11,7 +11,7 @@ export const promptForMediaGlob = async () => {
   let globPattern: string
   if (specialPath) {
     const path = await askForPathWithinSuggestion(specialPath)
-    globPattern = escapeForGlob(path)
+    globPattern = convertPathToGlob(path)
     globPattern = `${globPattern}/**`
   } else {
     globPattern = await promptForInput('Please enter a full glob pattern')
