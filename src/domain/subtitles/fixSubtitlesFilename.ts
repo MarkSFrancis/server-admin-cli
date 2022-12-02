@@ -20,6 +20,8 @@ export const fixExternalSubtitlesFilename = async (
     originalMediaPath
   )
 
+  console.log({ externalSubtitlesPaths })
+
   const externalSubtitles = await getBasicSubtitlesMeta(externalSubtitlesPaths)
 
   let idx = 1

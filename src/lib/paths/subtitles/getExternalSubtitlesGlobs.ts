@@ -1,3 +1,4 @@
+import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob'
 import { SUBTITLE_FILE_EXTENSIONS } from '@/lib/paths/exts'
 import { basename, extname } from 'path'
 
@@ -24,9 +25,15 @@ const subtitleFileGlob = `*+(${SUBTITLE_FILE_EXTENSIONS.join('|')})`
 const childFolderContainingFilenameGlob = (
   parentDir: string,
   filename: string
-) => `${parentDir}/**/${filename}/**/${subtitleFileGlob}`
+) =>
+  `${convertPathToGlob(parentDir)}/**/${convertPathToGlob(
+    filename
+  )}/**/${subtitleFileGlob}`
 
 const childFolderWithFileContainingFilenameGlob = (
   parentDir: string,
   filename: string
-) => `${parentDir}/**/${filename}${subtitleFileGlob}`
+) =>
+  `${convertPathToGlob(parentDir)}/**/${convertPathToGlob(
+    filename
+  )}${subtitleFileGlob}`
