@@ -4,8 +4,8 @@ module.exports = {
     node: true,
     es2021: true,
   },
-  extends: ['standard-with-typescript', 'prettier'],
-  plugins: ['jest'],
+  extends: ['standard-with-typescript', 'plugin:prettier/recommended'],
+  plugins: ['prettier', 'jest'],
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
