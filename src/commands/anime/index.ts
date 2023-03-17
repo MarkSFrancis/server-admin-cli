@@ -1,8 +1,5 @@
 import { Argument, Command } from 'commander'
-import { getAnimeReleaseSchedule } from '@/lib/apis/getAnimeReleaseSchedule'
-
-// API docs: https://anilist.github.io/ApiV2-GraphQL-Docs/
-// API playground: https://anilist.co/graphiql
+import { getAnimeEpisodeDates } from '@/domain/anime/getAnimeEpisodeDates'
 
 export const animeCommand = new Command('anime')
   .addArgument(
@@ -11,25 +8,22 @@ export const animeCommand = new Command('anime')
   .action(async (searchTerm: string) => {
     console.info(`Querying for episodes for the show ${searchTerm}...`)
 
-    const results = await getAnimeReleaseSchedule(searchTerm)
+    const results = await getAnimeEpisodeDates(searchTerm)
 
-    const totalEpisodes = results.episodes
-    const schedule = results.airingSchedule.edges.map((e) => ({
-      episode: e.node.episode,
-      releaseDate: new Date(e.node.airingAt * 1000),
-    }))
-
-    const now = new Date()
-
-    const releasedEpisodes = schedule.filter((s) => s.releaseDate < now)
-    const unreleasedEpisodes = schedule.filter((s) => s.releaseDate >= now)
-
-    console.info({
-      title: results.title,
-      url: results.siteUrl,
-      totalEpisodes,
-      isReleased: releasedEpisodes.length === totalEpisodes,
-      unreleasedEpisodes,
-      releasedEpisodes,
-    })
+    for (const match of results.matches) {
+      console.info({
+        title: match.englishTitle ?? match.title,
+        urls: match.urls,
+        subs: {
+          isReleased: match.episodes === match.estimatedSubEpisodesAiredSoFar,
+          estimatedReleaseDate: match.estimatedLastSubEpisodeReleaseDate,
+          estimatedReleasedEpisodes: match.estimatedSubEpisodesAiredSoFar,
+        },
+        dubs: !!match.earliestDubPremierDate && {
+          isReleased: match.episodes === match.estimatedDubEpisodesAiredSoFar,
+          estimatedReleaseDate: match.estimatedLastDubEpisodeReleaseDate,
+          estimatedReleasedEpisodes: match.estimatedDubEpisodesAiredSoFar,
+        },
+      })
+    }
   })
