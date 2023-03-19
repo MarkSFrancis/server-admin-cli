@@ -69,19 +69,19 @@ export const getAnimeEpisodeDates = async (
 }
 
 const getSubDubPremierDates = (anime: AnimeScheduleAnime) => {
-  let subDate = new Date(anime.subTime ?? anime.premier)
+  function isValidDate(date?: Date) {
+    if (!date || isNaN(+date) || date.getUTCFullYear() === 1) {
+      return false
+    }
 
-  if (subDate && (isNaN(+subDate) || subDate.getUTCFullYear() === 1)) {
-    subDate = new Date(anime.premier)
+    return true
   }
+
+  const subDate = new Date(anime.premier)
 
   let dubDate = anime.dubPremier ? new Date(anime.dubPremier) : undefined
 
-  if (!dubDate || isNaN(+dubDate) || dubDate.getUTCFullYear() === 1) {
-    dubDate = anime.dubTime ? new Date(anime.dubTime) : undefined
-  }
-
-  if (dubDate && (isNaN(+dubDate) || dubDate.getUTCFullYear() === 1)) {
+  if (!isValidDate(dubDate)) {
     dubDate = undefined
   }
 
