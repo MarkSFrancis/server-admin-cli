@@ -1,4 +1,4 @@
-import { Stats } from 'fs'
+import { type Stats } from 'fs'
 import { stat } from 'fs/promises'
 import { stub } from '../test-utils/stub'
 import { pathExists } from './pathExists'

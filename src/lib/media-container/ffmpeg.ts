@@ -1,4 +1,4 @@
-import { FfmpegCommand } from 'fluent-ffmpeg'
+import { type FfmpegCommand } from 'fluent-ffmpeg'
 
 interface FfmpegProgress {
   percent: number
@@ -6,14 +6,14 @@ interface FfmpegProgress {
 
 export const runFfmpeg = async (command: FfmpegCommand) => {
   console.info(
-    `Executing: ffmpeg `,
+    'Executing: ffmpeg ',
     command
       ._getArguments()
       .map((a) => `"${a}"`)
       .join(' ')
   )
 
-  return await new Promise<void>((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     command.on('error', (err: Error) => {
       reject(err)
     })

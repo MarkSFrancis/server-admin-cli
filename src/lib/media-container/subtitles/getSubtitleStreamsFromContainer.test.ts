@@ -1,8 +1,8 @@
 import { probeDataFromContainer } from '../probeStreamsFromContainer'
 import { stub } from '@/lib/test-utils/stub'
-import { FfprobeData } from 'fluent-ffmpeg'
+import { type FfprobeData } from 'fluent-ffmpeg'
 import { getSubtitleStreamsFromContainer } from './getSubtitleStreamsFromContainer'
-import { SubtitleStream } from './types'
+import { type SubtitleStream } from './types'
 
 jest.mock('../probeStreamsFromContainer')
 

@@ -1,4 +1,4 @@
-import { FfprobeStream } from 'fluent-ffmpeg'
+import { type FfprobeStream } from 'fluent-ffmpeg'
 import { getStreamLanguage } from '../getStreamLanguage'
 
 export interface SubtitleMetadata {

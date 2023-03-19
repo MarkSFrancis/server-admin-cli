@@ -2,7 +2,7 @@ import {
   probeDataFromContainer,
   STREAM_TYPES,
 } from '../probeStreamsFromContainer'
-import { SubtitleStream } from './types'
+import { type SubtitleStream } from './types'
 
 export const getSubtitleStreamsFromContainer = async (
   path: string

@@ -33,7 +33,7 @@ export const subtitlesReviewCommand = new Command('review')
         const subtitles = await getSubtitlesForMedia(filePath)
 
         if (subtitles.length === 0) {
-          console.info(`Subtitles not found`)
+          console.info('Subtitles not found')
         } else {
           const internalSubs = subtitles.filter(
             (s) => s.streamContainerPath === filePath

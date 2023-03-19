@@ -44,7 +44,8 @@ const getFolderSuggestPath = async () => {
     {
       name: 'specialFolder',
       type: 'expand',
-      message: `Use a default glob pattern for a subfolder in a well known folder`,
+      message:
+        'Use a default glob pattern for a subfolder in a well known folder',
       choices: [
         {
           key: 'b',

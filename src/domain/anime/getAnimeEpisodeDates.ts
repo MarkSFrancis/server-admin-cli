@@ -69,7 +69,7 @@ export const getAnimeEpisodeDates = async (
 }
 
 const getSubDubPremierDates = (anime: AnimeScheduleAnime) => {
-  function isValidDate(date?: Date) {
+  const isValidDate = (date?: Date) => {
     if (!date || isNaN(+date) || date.getUTCFullYear() === 1) {
       return false
     }

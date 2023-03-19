@@ -1,4 +1,4 @@
-import { Language, Iso6393Languages } from './languages'
+import { type Language, Iso6393Languages } from './languages'
 
 /**
  * Converts a language code to a language if it's recognised against ISO-639-1, ISO-639-2/B, or ISO-639-2/T standards

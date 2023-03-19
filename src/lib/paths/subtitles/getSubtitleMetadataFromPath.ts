@@ -1,5 +1,5 @@
 import { findLanguageByCode } from '@/lib/language/findLanguageByCode'
-import { SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream'
+import { type SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream'
 import { basename, extname } from 'path'
 import { externalSubtitlesMetaFlags } from './externalSubtitlesMetaFlags'
 

@@ -9,7 +9,7 @@ export const getTvEpisodeNumber = async (path: string): Promise<number> => {
 
   const results = [...name.matchAll(episodePattern)]
 
-  let episodeNumber: number = 0
+  let episodeNumber = 0
 
   const possibleEpisodeNumbers = results
     .map((r) => {

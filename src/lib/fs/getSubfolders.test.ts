@@ -1,4 +1,4 @@
-import { Stats } from 'fs'
+import { type Stats } from 'fs'
 import { stat, readdir } from 'fs/promises'
 import { stub } from '../test-utils/stub'
 import { getSubfolders } from './getSubfolders'

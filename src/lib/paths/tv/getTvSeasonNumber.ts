@@ -7,7 +7,7 @@ export const getTvSeasonNumber = async (path: string): Promise<number> => {
 
   const results = [...path.matchAll(seasonPattern)]
 
-  let seasonNumber: number = -1
+  let seasonNumber = -1
 
   const possibleSeasonNumbers = results
     .map((r) => {

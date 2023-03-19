@@ -1,4 +1,4 @@
-import { ffprobe, FfprobeData } from 'fluent-ffmpeg'
+import { ffprobe, type FfprobeData } from 'fluent-ffmpeg'
 import { promisify } from 'util'
 
 const ffprobeAsync = promisify<string, FfprobeData>(ffprobe)

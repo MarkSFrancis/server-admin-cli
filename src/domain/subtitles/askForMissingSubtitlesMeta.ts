@@ -1,6 +1,6 @@
 import { Iso6393Languages } from '@/lib/language/languages'
-import { SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream'
-import { prompt, QuestionCollection } from 'inquirer'
+import { type SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream'
+import { prompt, type QuestionCollection } from 'inquirer'
 
 export const askForMissingSubtitlesMeta = async (meta: SubtitleMetadata) => {
   const newMeta: SubtitleMetadata = {

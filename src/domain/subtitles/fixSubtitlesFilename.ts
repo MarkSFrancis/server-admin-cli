@@ -5,7 +5,7 @@ import { getExternalSubtitlesForMedia } from './getExternalSubtitlesForMedia'
 import { getFixedExternalSubtitlesPath } from '@/lib/paths/subtitles/getFixedExternalSubtitlesPath'
 import { stat } from 'fs/promises'
 import {
-  SubtitleGroupMember,
+  type SubtitleGroupMember,
   guessSubtitleMetaFromGroupMeta,
 } from '@/lib/paths/subtitles/guessSubtitleMetaFromGroupMeta'
 import { pathExists } from '@/lib/fs/pathExists'

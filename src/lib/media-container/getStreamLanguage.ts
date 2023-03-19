@@ -1,4 +1,4 @@
-import { FfprobeStream } from 'fluent-ffmpeg'
+import { type FfprobeStream } from 'fluent-ffmpeg'
 
 /*
   From the MKV spec:

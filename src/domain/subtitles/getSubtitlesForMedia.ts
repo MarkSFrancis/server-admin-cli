@@ -1,5 +1,5 @@
 import { getExternalSubtitlesForMedia } from './getExternalSubtitlesForMedia'
-import { SubtitleStream } from '@/lib/media-container/subtitles/types'
+import { type SubtitleStream } from '@/lib/media-container/subtitles/types'
 import { getSubtitleStreamsFromContainer } from '@/lib/media-container/subtitles/getSubtitleStreamsFromContainer'
 
 export const getSubtitlesForMedia = async (

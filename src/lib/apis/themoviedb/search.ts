@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { TMDB_API_KEY, TMDB_URL } from './config'
-import { TmdbTvSearchResponse } from './types'
+import { type TmdbTvSearchResponse } from './types'
 
 export const searchForTvShow = async (
   identifier: string
