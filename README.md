@@ -21,20 +21,20 @@ For themoviedb.org, make sure to use a [v4 auth bearer token](https://developers
 
 You'll need to create a `.env` file at the root of this project, then set your API keys within it.
 
-Here's an example with the TMDB_API_KEY set:
+Here's an example:
 
 ```
-TMDB_API_KEY=your_api_key_here
+SERVER_ADMIN_CLI_TMDB_API_KEY=your_api_key_here
 ```
 
 ### Using environment variables
 
 You can also use environment variables.
 
-Here's an example with all keys set using bash:
+Here's an example:
 
 ```sh
-export TMDB_API_KEY=your_api_key_here
+export SERVER_ADMIN_CLI_TMDB_API_KEY="your_api_key_here"
 ```
 
 If you use both, the config file will override your environment variables
@@ -51,4 +51,6 @@ yarn start --help
 These resources are not required, and you can use as many or as few as you'd like.  
 Each one enhances this tool, but for most commands, you won't need them. Run `--help` at the end of the command you want to find out which keys it might need
 
-- themoviedb.org API key (identifies the episode's title and other metadata). This is a [secret](#secrets), `TMDB_API_KEY`
+- themoviedb.org API key
+  - `SERVER_ADMIN_CLI_TMDB_API_KEY`
+  - Identifies the episode's title and other metadata
