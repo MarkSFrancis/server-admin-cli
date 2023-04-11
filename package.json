@@ -48,7 +48,7 @@
     "commander": "^10.0.0",
     "dotenv": "^16.0.3",
     "fluent-ffmpeg": "^2.1.2",
-    "glob": "^9.3.4",
+    "glob": "^10.0.0",
     "inquirer": "^8",
     "iso-639-3": "^2.2.0",
     "open": "^9"
