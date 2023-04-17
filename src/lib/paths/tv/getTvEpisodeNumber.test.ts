@@ -67,3 +67,10 @@ it('should detect number-only episode IDs', async () => {
   expect(promptForInputMock).toHaveBeenCalledTimes(0)
   expect(episodeNumber).toEqual(3)
 })
+
+it('should detect episode IDs right next to season IDs', async () => {
+  const episodeNumber = await getTvEpisodeNumber('S01E03.mkv')
+
+  expect(promptForInputMock).toHaveBeenCalledTimes(0)
+  expect(episodeNumber).toEqual(3)
+})
