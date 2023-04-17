@@ -5,7 +5,7 @@ import { distinct } from '../../distinct'
 export const getTvEpisodeNumber = async (path: string): Promise<number> => {
   const name = basename(path)
 
-  const episodePattern = /( - \d+ )|(E\d+)|(Episode \d+)/gi
+  const episodePattern = /( - \d+ )|((\(| )E\d+)|(Episode \d+)/gi
 
   const results = [...name.matchAll(episodePattern)]
 
