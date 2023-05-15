@@ -14,7 +14,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@tsconfig/node18": "^2.0.0",
+    "@tsconfig/node18": "^2.0.1",
     "@types/fluent-ffmpeg": "^2.1.21",
     "@types/glob": "^8.1.0",
     "@types/inquirer": "^8",
