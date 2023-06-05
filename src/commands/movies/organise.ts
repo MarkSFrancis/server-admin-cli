@@ -1,13 +1,12 @@
-import { fixTvFilename } from '@/domain/tv/fixTvFilename'
 import { Command, Option } from 'commander'
 import { pathMatchesExtension } from '@/lib/paths/filterByExtension'
 import { VIDEO_FILE_EXTENSIONS } from '@/lib/paths/exts'
 import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
 import { fixExternalSubtitlesFilename } from '@/domain/subtitles/fixSubtitlesFilename'
 import { promptForMediaGlob } from '@/lib/console/promptForMediaGlob'
-import { getExternalSubtitlesForTv } from '@/domain/subtitles/getExternalSubtitlesForTv'
+import { getExternalSubtitlesForMovie } from '@/domain/subtitles/getExternalSubtitlesForMovie'
 
-export const tvOrganiseCommand = new Command('organise')
+export const moviesOrganiseCommand = new Command('organise')
   .addOption(
     new Option('-g, --glob <string>', 'the glob pattern to files to organise')
   )
@@ -24,11 +23,10 @@ export const tvOrganiseCommand = new Command('organise')
       console.info(`Organising ${idx} of ${allFiles.length}`)
 
       if (pathMatchesExtension(filePath, VIDEO_FILE_EXTENSIONS)) {
-        const newPath = await fixTvFilename(filePath)
-        console.info(`Moved\n${filePath}\nto\n${newPath}\n`)
-
-        const externalSubtitlesPaths = await getExternalSubtitlesForTv(filePath)
-        await fixExternalSubtitlesFilename(externalSubtitlesPaths, newPath)
+        const externalSubtitlesPaths = await getExternalSubtitlesForMovie(
+          filePath
+        )
+        await fixExternalSubtitlesFilename(externalSubtitlesPaths, filePath)
         console.info(`Moved subtitles for\n${filePath}\n`)
       } else {
         console.info(`Skipped\n${filePath}\n as it's not a video file`)

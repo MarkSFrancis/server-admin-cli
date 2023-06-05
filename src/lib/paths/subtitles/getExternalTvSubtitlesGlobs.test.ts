@@ -1,8 +1,8 @@
-import { getExternalSubtitlesGlobs } from './getExternalSubtitlesGlobs'
+import { getExternalTvSubtitlesGlobs } from './getExternalTvSubtitlesGlobs'
 import minimatch from 'minimatch'
 
 it('generates pattern for simple linux file path', () => {
-  const pattern = getExternalSubtitlesGlobs('/var/file1.mkv')
+  const pattern = getExternalTvSubtitlesGlobs('/var/file1.mkv')
 
   expect(pattern[0]).toEqual(
     '/var/**/file1/**/*+(.ass|.idx|.sub|.srt|.ssa|.smi|.vtt)'
@@ -13,7 +13,7 @@ it('generates pattern for simple linux file path', () => {
 })
 
 it('generates pattern for windows file path', () => {
-  const pattern = getExternalSubtitlesGlobs('C:\\files\\file1.mkv')
+  const pattern = getExternalTvSubtitlesGlobs('C:\\files\\file1.mkv')
 
   expect(pattern[0]).toEqual(
     'C:/files/**/file1/**/*+(.ass|.idx|.sub|.srt|.ssa|.smi|.vtt)'
@@ -24,7 +24,7 @@ it('generates pattern for windows file path', () => {
 })
 
 it('matches sibling subtitles', () => {
-  const patterns = getExternalSubtitlesGlobs('/var/file1.mkv')
+  const patterns = getExternalTvSubtitlesGlobs('/var/file1.mkv')
 
   const matches = patterns.find((p) => minimatch('/var/file1.eng.srt', p))
 
@@ -32,7 +32,7 @@ it('matches sibling subtitles', () => {
 })
 
 it('matches child subtitles with the video file name', () => {
-  const patterns = getExternalSubtitlesGlobs('/var/file1.mkv')
+  const patterns = getExternalTvSubtitlesGlobs('/var/file1.mkv')
 
   const matches = patterns.find((p) => minimatch('/var/subs/file1.eng.srt', p))
 
@@ -40,7 +40,7 @@ it('matches child subtitles with the video file name', () => {
 })
 
 it('matches child subtitles with the video file name in a subfolder', () => {
-  const patterns = getExternalSubtitlesGlobs('/var/file1.mkv')
+  const patterns = getExternalTvSubtitlesGlobs('/var/file1.mkv')
 
   const matches = patterns.find((p) => minimatch('/var/file1/English_1.srt', p))
 
@@ -48,7 +48,7 @@ it('matches child subtitles with the video file name in a subfolder', () => {
 })
 
 it('does not match child subtitles with no video name', () => {
-  const patterns = getExternalSubtitlesGlobs('/var/file1.mkv')
+  const patterns = getExternalTvSubtitlesGlobs('/var/file1.mkv')
 
   const matches = patterns.find((p) => minimatch('/var/subs/English_1.srt', p))
 

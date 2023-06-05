@@ -1,10 +1,10 @@
 import { resolveGlob } from '@/lib/fs/glob/resolveGlob'
-import { getExternalSubtitlesGlobs } from '@/lib/paths/subtitles/getExternalSubtitlesGlobs'
+import { getExternalMovieSubtitlesGlobs } from '@/lib/paths/subtitles/getExternalMovieSubtitlesGlobs'
 
-export const getExternalSubtitlesForMedia = async (
+export const getExternalSubtitlesForMovie = async (
   path: string
 ): Promise<string[]> => {
-  const globs = getExternalSubtitlesGlobs(path)
+  const globs = getExternalMovieSubtitlesGlobs(path)
 
   const externalSubtitlesPaths = await Promise.all(
     globs.map(async (g) => await resolveGlob(g))

@@ -1,10 +1,11 @@
 import { Command } from 'commander'
-import { basename, extname } from 'path'
+import path, { extname } from 'path'
 import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
 import { SpecialFolders } from '@/lib/paths/SpeciaFolders'
 import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob'
 import { getBasicMusicMeta, getMusicMeta } from '@/domain/music/getMusicMeta'
 import { getMusicDestinationFilename } from '@/domain/music/getMusicDestinationFilename'
+import { moveFile } from '@/lib/fs/moveFile'
 
 // https://support.plex.tv/articles/200265296-adding-music-media-from-folders/#toc-0
 
@@ -15,18 +16,25 @@ export const musicLibraryOrganiseCommand = new Command('organise').action(
   async () => {
     const musicLibraryPath = SpecialFolders.Music
     const allFiles = await resolveWslGlob(
-      `${convertPathToGlob(musicLibraryPath)}/**/*`
+      `${convertPathToGlob(musicLibraryPath)}/Compilations/*`
     )
 
     let idx = 1
     for (const filePath of allFiles) {
-      console.info(
-        `Reviewing metadata for ${basename(filePath)} (${idx} of ${
-          allFiles.length
-        })`
-      )
+      if (extname(filePath) === '') {
+        // Is probably a folder
+        continue
+      }
 
-      console.info(`Analysing:\n${filePath}`)
+      console.info(`Analysing ${idx} of ${allFiles.length}:\n${filePath}`)
+
+      if (
+        path.dirname(filePath).split(path.sep).slice(-1).pop() !==
+        'Compilations'
+      ) {
+        console.info('Not in compilations folder, skipping')
+        continue
+      }
 
       const meta = getBasicMusicMeta(await getMusicMeta(filePath))
       if (!meta) {
@@ -38,6 +46,11 @@ export const musicLibraryOrganiseCommand = new Command('organise').action(
           extname(filePath)
         )
         console.info('Destination:', destination)
+
+        await moveFile(filePath, destination, {
+          overwrite: false,
+          renameOnDuplicate: true,
+        })
       }
 
       idx++

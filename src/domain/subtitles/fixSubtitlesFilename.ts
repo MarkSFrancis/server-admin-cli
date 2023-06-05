@@ -1,7 +1,6 @@
 import { moveFile } from '@/lib/fs/moveFile'
 import { getSubtitleMetadataFromPath } from '@/lib/paths/subtitles/getSubtitleMetadataFromPath'
 import { askForMissingSubtitlesMeta } from './askForMissingSubtitlesMeta'
-import { getExternalSubtitlesForMedia } from './getExternalSubtitlesForMedia'
 import { getFixedExternalSubtitlesPath } from '@/lib/paths/subtitles/getFixedExternalSubtitlesPath'
 import { stat } from 'fs/promises'
 import {
@@ -13,13 +12,9 @@ import { prompt } from 'inquirer'
 import { basename } from 'path'
 
 export const fixExternalSubtitlesFilename = async (
-  originalMediaPath: string,
+  externalSubtitlesPaths: string[],
   newMediaPath: string
 ) => {
-  const externalSubtitlesPaths = await getExternalSubtitlesForMedia(
-    originalMediaPath
-  )
-
   const externalSubtitles = await getBasicSubtitlesMeta(externalSubtitlesPaths)
 
   let idx = 1

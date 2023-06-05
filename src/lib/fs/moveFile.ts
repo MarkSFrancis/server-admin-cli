@@ -1,5 +1,5 @@
 import { mkdir, rename } from 'fs/promises'
-import { dirname } from 'path'
+import { basename, dirname, extname, join } from 'path'
 import { pathExists } from './pathExists'
 
 /**
@@ -11,15 +11,23 @@ import { pathExists } from './pathExists'
 export const moveFile = async (
   oldPath: string,
   newPath: string,
-  options: { overwrite: boolean }
+  options: { overwrite: boolean; renameOnDuplicate?: boolean }
 ) => {
   if (oldPath === newPath) return
 
   if (!options.overwrite) {
     if (await pathExists(newPath)) {
-      throw new Error(
-        `Path ${newPath} already exists and cannot be overwritten`
-      )
+      if (options.renameOnDuplicate) {
+        let conflictId = 1
+        do {
+          conflictId++
+          newPath = fixPathConflict(newPath, conflictId)
+        } while (await pathExists(newPath))
+      } else {
+        throw new Error(
+          `Path ${newPath} already exists and cannot be overwritten`
+        )
+      }
     }
   }
 
@@ -28,4 +36,13 @@ export const moveFile = async (
   await rename(oldPath, newPath)
 
   return newPath
+}
+
+const fixPathConflict = (path: string, conflictId: number) => {
+  const ext = extname(path)
+  const fileName = basename(path, extname(path))
+
+  const fixedFilename = `${fileName} (${conflictId})${ext}`
+
+  return join(dirname(path), fixedFilename)
 }

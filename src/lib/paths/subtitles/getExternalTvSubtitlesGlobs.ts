@@ -2,7 +2,7 @@ import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob'
 import { SUBTITLE_FILE_EXTENSIONS } from '@/lib/paths/exts'
 import { basename, extname } from 'path'
 
-export const getExternalSubtitlesGlobs = (path: string): string[] => {
+export const getExternalTvSubtitlesGlobs = (path: string): string[] => {
   path = path.replaceAll('\\', '/') // windows support
 
   const pathExt = extname(path)

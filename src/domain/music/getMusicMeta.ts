@@ -12,7 +12,14 @@ export interface BasicMusicMeta {
 export const getMusicMeta = async (path: string) => {
   const data = await probeDataFromContainer(path)
 
-  return data.format.tags
+  let tags = data.format.tags
+
+  if (!tags) {
+    // Fallback to stream tags (for ogg containers)
+    tags = data.streams[0].tags
+  }
+
+  return tags
 }
 
 export const getBasicMusicMeta = (
@@ -20,17 +27,35 @@ export const getBasicMusicMeta = (
 ): BasicMusicMeta | undefined => {
   if (!meta) return
 
-  const { title, artist, album_artist, album, track, genre } = meta as Record<
-    string,
-    string
-  >
+  const {
+    title,
+    TITLE,
+    artist,
+    ARTIST,
+    album_artist,
+    ALBUM_ARTIST,
+    album,
+    ALBUM,
+    track,
+    TRACK,
+    genre,
+    GENRE,
+  } = meta as Record<string, string>
+
+  const trackId = getTrackId(track ?? TRACK)
 
   return {
-    title,
-    artist,
-    album_artist,
-    album,
-    track,
-    genre,
+    title: title ?? TITLE,
+    artist: artist ?? ARTIST,
+    album_artist: album_artist ?? ALBUM_ARTIST,
+    album: album ?? ALBUM,
+    track: trackId,
+    genre: genre ?? GENRE,
   }
+}
+
+const getTrackId = (track: string | undefined) => {
+  const trackId = track?.split(/\/|;/)[0]
+
+  return trackId
 }

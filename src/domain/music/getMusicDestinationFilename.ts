@@ -1,4 +1,4 @@
-import path, { join, normalize } from 'path'
+import { join } from 'path'
 import { BasicMusicMeta } from './getMusicMeta'
 
 /**
@@ -12,16 +12,17 @@ export const getMusicDestinationFilename = (
   meta: BasicMusicMeta,
   ext: string
 ) => {
-  const albumArtist = meta.album_artist ?? meta.artist ?? 'Various Artists'
-  const album = meta.album ?? 'Unknown Album'
+  const albumArtist = meta.artist ?? 'Various Artists'
+  const album = meta.album
   const trackName = meta.track ? `${meta.track} - ${meta.title}` : meta.title
 
-  const destination = join(
-    baseDirectory,
-    albumArtist,
-    album,
-    `${trackName}${ext}`
-  )
+  const pathSegments = [albumArtist, album, `${trackName}${ext}`]
+    .filter((s): s is string => !!s)
+    .map((s) => escapePathSegment(s))
 
-  return destination
+  return join(baseDirectory, ...pathSegments)
+}
+
+const escapePathSegment = (segment: string) => {
+  return segment.replace(/[/\\?%*:|"<>]/g, '-')
 }
