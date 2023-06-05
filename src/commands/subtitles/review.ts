@@ -3,10 +3,13 @@ import { pathMatchesExtension } from '@/lib/paths/filterByExtension'
 import { Command, Option } from 'commander'
 import { basename } from 'path'
 import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
-import { getSubtitlesForMedia } from '@/domain/subtitles/getSubtitlesForMedia'
+import { getSubtitlesForTv } from '@/domain/subtitles/getSubtitlesForTv'
 import { promptForMediaGlob } from '@/lib/console/promptForMediaGlob'
 
 export const subtitlesReviewCommand = new Command('review')
+  .description(
+    'reviews the subtitles for TV episodes that match a given glob pattern'
+  )
   .addOption(
     new Option(
       '-g, --glob <string>',
@@ -30,7 +33,7 @@ export const subtitlesReviewCommand = new Command('review')
       } else {
         console.info(`Analysing:\n${filePath}`)
 
-        const subtitles = await getSubtitlesForMedia(filePath)
+        const subtitles = await getSubtitlesForTv(filePath)
 
         if (subtitles.length === 0) {
           console.info('Subtitles not found')
