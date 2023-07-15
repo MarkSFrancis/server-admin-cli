@@ -1,6 +1,7 @@
 import { Command } from 'commander'
-import { musicLibraryOrganiseCommand } from './organise'
+import { musicOrganiseCommand } from './organise'
+import { musicItunesCommand } from './itunes'
 
-export const musicCommand = new Command('music').addCommand(
-  musicLibraryOrganiseCommand
-)
+export const musicCommand = new Command('music')
+  .addCommand(musicOrganiseCommand)
+  .addCommand(musicItunesCommand)
