@@ -23,10 +23,8 @@ export const getMusicMeta = async (path: string) => {
 }
 
 export const getBasicMusicMeta = (
-  meta: Record<string, string | number> | undefined
-): BasicMusicMeta | undefined => {
-  if (!meta) return
-
+  meta: Record<string, string | number>
+): BasicMusicMeta => {
   const {
     title,
     TITLE,

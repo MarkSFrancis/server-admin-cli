@@ -1,5 +1,8 @@
 import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob'
-import { SUBTITLE_FILE_EXTENSIONS } from '@/lib/paths/exts'
+import {
+  SUBTITLE_FILE_EXTENSIONS,
+  extensionsToGlobPattern,
+} from '@/lib/paths/exts'
 import { basename, extname } from 'path'
 
 export const getExternalMovieSubtitlesGlobs = (path: string): string[] => {
@@ -15,7 +18,7 @@ export const getExternalMovieSubtitlesGlobs = (path: string): string[] => {
   return [childFolderContainingSubtitlesGlob(parentDir)]
 }
 
-const subtitleFileGlob = `*+(${SUBTITLE_FILE_EXTENSIONS.join('|')})`
-
 const childFolderContainingSubtitlesGlob = (parentDir: string) =>
-  `${convertPathToGlob(parentDir)}/**/${subtitleFileGlob}`
+  `${convertPathToGlob(parentDir)}/**/*${extensionsToGlobPattern(
+    SUBTITLE_FILE_EXTENSIONS
+  )}`

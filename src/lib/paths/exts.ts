@@ -8,3 +8,16 @@ export const SUBTITLE_FILE_EXTENSIONS = [
   '.smi',
   '.vtt',
 ]
+export const MUSIC_FILE_EXTENSIONS = [
+  '.m4a',
+  '.mp3',
+  '.opus',
+  '.ogg',
+  '.flac',
+  '.wav',
+  '.alac',
+]
+
+export const extensionsToGlobPattern = (exts: string[]) => {
+  return `+(${exts.join('|')})`
+}

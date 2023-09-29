@@ -2,7 +2,6 @@ import { prompt, Separator } from 'inquirer'
 import { basename } from 'path'
 import { getSubfolders } from '../fs/getSubfolders'
 import { convertPathToGlob } from '../fs/glob/convertPathToGlob'
-import { VIDEO_FILE_EXTENSIONS } from '../paths/exts'
 import { SpecialFolders } from '../paths/SpeciaFolders'
 import { promptForInput } from './promptForInput'
 
@@ -13,7 +12,7 @@ export const promptForMediaGlob = async () => {
   if (specialPath) {
     const path = await askForPathWithinSuggestion(specialPath)
     globPattern = convertPathToGlob(path)
-    globPattern = `${globPattern}/**/*+(${VIDEO_FILE_EXTENSIONS.join('|')})`
+    globPattern = `${globPattern}/**/*`
   } else {
     globPattern = await promptForInput('Please enter a full glob pattern')
   }

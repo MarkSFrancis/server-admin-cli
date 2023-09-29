@@ -1,7 +1,5 @@
 import { readFile } from 'fs/promises'
 
-// I am aware this code is absolute garbage, but it works on my machine so I'm happy 😝
-
 export const parseItunesLibrary = async (xmlLibraryPath: string) => {
   if (!xmlLibraryPath.endsWith('.xml')) {
     throw new Error('Only XML library exports are supported')
@@ -13,14 +11,12 @@ export const parseItunesLibrary = async (xmlLibraryPath: string) => {
   const tracksStartIdx =
     xmlRows.findIndex((r) => r.trim() === '<key>Tracks</key>') + 1
   if (xmlRows[tracksStartIdx].trim() !== '<dict>') {
-    // I give up
     throw new Error('Unrecognised iTunes library XML')
   }
 
   const tracksEndIdx =
     xmlRows.findIndex((r) => r.trim() === '<key>Playlists</key>') - 1
   if (xmlRows[tracksEndIdx + 2].trim() !== '<array>') {
-    // I give up
     throw new Error('Unrecognised iTunes library XML')
   }
 

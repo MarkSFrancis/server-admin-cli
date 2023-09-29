@@ -15,7 +15,8 @@ import { moveFile } from '@/lib/fs/moveFile'
 export const musicOrganiseCommand = new Command('organise').action(async () => {
   const musicLibraryPath = SpecialFolders.Music
   const allFiles = await resolveWslGlob(
-    `${convertPathToGlob(musicLibraryPath)}/Compilations/*`
+    `${convertPathToGlob(musicLibraryPath)}/Compilations/*`,
+    { nodir: true }
   )
 
   let idx = 1
@@ -34,7 +35,8 @@ export const musicOrganiseCommand = new Command('organise').action(async () => {
       continue
     }
 
-    const meta = getBasicMusicMeta(await getMusicMeta(filePath))
+    const complexMeta = await getMusicMeta(filePath)
+    const meta = complexMeta ? getBasicMusicMeta(complexMeta) : undefined
     if (!meta) {
       console.error('Failed to parse meta')
     } else {
