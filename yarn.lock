@@ -803,10 +803,10 @@
   resolved "https://registry.npmjs.org/@types/color-name/-/color-name-1.1.1.tgz"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
-"@types/fluent-ffmpeg@^2.1.22":
-  version "2.1.22"
-  resolved "https://registry.yarnpkg.com/@types/fluent-ffmpeg/-/fluent-ffmpeg-2.1.22.tgz#57fe44beb5e68ef5d33fd58680c20210f64cfca7"
-  integrity sha512-ZZPDDrDOb2Ahp5fxZzuw64f0rCcviv+SDuCyJ1PIF/UFn9wNHtb/bY8Dj/2nrbQ7SNsGI7gaO2wJVkkU2HBcMg==
+"@types/fluent-ffmpeg@^2.1.23":
+  version "2.1.23"
+  resolved "https://registry.yarnpkg.com/@types/fluent-ffmpeg/-/fluent-ffmpeg-2.1.23.tgz#ee7923ff861fa2f6cd2ee5c10a538addb72f150e"
+  integrity sha512-ZEogBz8YpWflRox2uzGUNOYolQPUDGMNUFhf6fY/cW+6i00oeSTD0tYf4az6/162jv0YsRYi6uxigssnag7E7A==
   dependencies:
     "@types/node" "*"
 
