@@ -1,12 +1,12 @@
-import { basename } from 'path'
+import { basename, extname } from 'path'
 import { promptForInput } from '../../console/promptForInput'
 import { distinct } from '../../distinct'
 
 export const getTvEpisodeNumber = async (path: string): Promise<number> => {
-  const name = basename(path)
+  const name = basename(path, extname(path))
 
   const episodePattern =
-    /( - \d+ )|((\(| |-|^)E\d+)|(Episode \d+)|(E\d+(\)| |-|(.([a-z]|[0-9])+)$))/gi
+    /( - \d+( |\)|$))|((\(| |-|^)E\d+)|(Episode \d+)|(E\d+(\)| |-|$))/gi
 
   const results = [...name.matchAll(episodePattern)]
 
