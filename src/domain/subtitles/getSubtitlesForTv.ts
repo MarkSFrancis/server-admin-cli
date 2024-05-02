@@ -1,16 +1,24 @@
-import { getExternalSubtitlesForTv } from './getExternalSubtitlesForTv'
-import { type SubtitleStream } from '@/lib/media-container/subtitles/types'
 import { getSubtitleStreamsFromContainer } from '@/lib/media-container/subtitles/getSubtitleStreamsFromContainer'
+import { getExternalSubtitlesForTv } from './getExternalSubtitlesForTv'
 
-export const getSubtitlesForTv = async (
-  path: string
-): Promise<SubtitleStream[]> => {
+export const getSubtitlesForTv = async (path: string) => {
   const externalSubtitlePaths = await getExternalSubtitlesForTv(path)
 
   const subtitleFileStreams = await Promise.all([
-    getSubtitleStreamsFromContainer(path),
+    getSubtitleStreamsFromContainer(path).then((streams) =>
+      streams.map((stream) => ({
+        streamContainerPath: path,
+        stream,
+      }))
+    ),
     ...externalSubtitlePaths.map(
-      async (p) => await getSubtitleStreamsFromContainer(p)
+      async (p) =>
+        await getSubtitleStreamsFromContainer(p).then((streams) =>
+          streams.map((stream) => ({
+            streamContainerPath: p,
+            stream: stream,
+          }))
+        )
     ),
   ])
 

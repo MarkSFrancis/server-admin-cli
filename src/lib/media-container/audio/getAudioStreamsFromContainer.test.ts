@@ -1,8 +1,7 @@
 import { probeDataFromContainer } from '../probeStreamsFromContainer'
 import { stub } from '@/lib/test-utils/stub'
-import { type FfprobeData } from 'fluent-ffmpeg'
+import { FfprobeStream, type FfprobeData } from 'fluent-ffmpeg'
 import { getAudioStreamsFromContainer } from './getAudioStreamsFromContainer'
-import { type FfmpegStream } from './types'
 
 jest.mock('../probeStreamsFromContainer')
 
@@ -31,7 +30,7 @@ it('should skip non-audio streams', async () => {
 
   const streams = await getAudioStreamsFromContainer('/var/file.mkv')
 
-  expect(streams).toEqual<FfmpegStream[]>([])
+  expect(streams).toEqual([])
 })
 
 it('should probe its data and return audio streams', async () => {
@@ -50,14 +49,8 @@ it('should probe its data and return audio streams', async () => {
 
   const streams = await getAudioStreamsFromContainer('/var/file.mkv')
 
-  expect(streams).toEqual<FfmpegStream[]>([
-    {
-      streamContainerPath: '/var/file.mkv',
-      stream: testData.streams[0],
-    },
-    {
-      streamContainerPath: '/var/file.mkv',
-      stream: testData.streams[1],
-    },
+  expect(streams).toEqual<FfprobeStream[]>([
+    testData.streams[0],
+    testData.streams[1],
   ])
 })
