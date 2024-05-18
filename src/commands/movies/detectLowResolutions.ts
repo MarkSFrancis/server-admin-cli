@@ -6,8 +6,11 @@ import {
 import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob'
 import { promptForMediaGlob } from '@/lib/console/promptForMediaGlob'
 import { getVideoStreamsFromContainer } from '@/lib/media-container/video/getVideoStreamsFromContainer'
-import { FfprobeStream } from 'fluent-ffmpeg'
 import { statSync } from 'fs'
+import {
+  getHighestResolutionStream,
+  isStreamHD,
+} from '@/lib/media-container/video/isStreamHD'
 
 export const moviesDetectLowResolutionsCommand = new Command(
   'detect-low-resolutions'
@@ -33,48 +36,25 @@ export const moviesDetectLowResolutionsCommand = new Command(
 
       const fileStats = statSync(filePath)
       const fileSizeMB = Math.floor(fileStats.size / (1024 * 1024))
-      const bestStream = getBestStream(
+      const bestStream = getHighestResolutionStream(
         await getVideoStreamsFromContainer(filePath)
       )
 
       let text: string
-      if (bestStream?.width !== undefined || bestStream?.height !== undefined) {
-        if (
-          (bestStream.width ?? 0 >= 1920) ||
-          (bestStream.height ?? 0 >= 1080)
-        ) {
+      const isHD = isStreamHD(bestStream)
+      if (isHD === undefined) {
+        text = 'File quality is unknown'
+      } else {
+        if (isHD === true) {
           text = 'File is HD'
         } else {
           text = 'File is not HD'
         }
-
-        text += ` (${bestStream.width ?? '?'}x${bestStream.height ?? '?'})`
-      } else {
-        text = 'File quality is unknown'
+        text += ` (${bestStream?.width ?? '?'}x${bestStream?.height ?? '?'})`
       }
 
-      console.info(`${text} (${fileSizeMB})MB`)
+      console.info(`${text} (${fileSizeMB}MB)`)
 
       idx++
     }
   })
-
-/**
- * Get the highest resolution stream
- */
-const getBestStream = (streams: FfprobeStream[]) =>
-  streams.reduce<FfprobeStream | undefined>((best, s) => {
-    if (!best) {
-      return s
-    } else if (best.width === undefined || best.height === undefined) {
-      return s
-    } else if (s.width === undefined || s.height === undefined) {
-      return best
-    } else if (s.width > best.width) {
-      return s
-    } else if (s.height > best.height) {
-      return s
-    } else {
-      return best
-    }
-  }, undefined)
