@@ -1,9 +1,5 @@
 import { type FfmpegCommand } from 'fluent-ffmpeg'
 
-interface FfmpegProgress {
-  percent: number
-}
-
 export const runFfmpeg = async (command: FfmpegCommand) => {
   console.info(
     'Executing: ffmpeg ',
@@ -17,7 +13,7 @@ export const runFfmpeg = async (command: FfmpegCommand) => {
     command.on('error', (err: Error) => {
       reject(err)
     })
-    command.on('progress', (data: FfmpegProgress) => {
+    command.on('progress', (data) => {
       console.info(`Processing: ${data.percent}% done`)
     })
     command.on('end', () => {
