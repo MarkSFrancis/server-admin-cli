@@ -11,7 +11,7 @@
     "build": "tsc",
     "test": "jest --changedSince origin/main",
     "test:all": "jest",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.4",
