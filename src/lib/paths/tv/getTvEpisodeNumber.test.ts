@@ -74,3 +74,10 @@ it('should detect episode IDs right next to season IDs', async () => {
   expect(promptForInputMock).toHaveBeenCalledTimes(0)
   expect(episodeNumber).toEqual(3)
 })
+
+it('should detect episode ID using . as the delimiter', async () => {
+  const episodeNumber = await getTvEpisodeNumber('Item.E03.1080p.mkv')
+
+  expect(promptForInputMock).toHaveBeenCalledTimes(0)
+  expect(episodeNumber).toEqual(3)
+})

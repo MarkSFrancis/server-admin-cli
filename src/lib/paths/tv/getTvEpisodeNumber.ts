@@ -6,7 +6,7 @@ export const getTvEpisodeNumber = async (path: string): Promise<number> => {
   const name = basename(path, extname(path))
 
   const episodePattern =
-    /( - \d+( |\)|$))|((\(| |-|^)E\d+)|(Episode \d+)|(E\d+(\)| |-|$))/gi
+    /( - \d+( |\)|$))|((\(| |-|\.|^)E\d+)|(Episode \d+)|(E\d+(\)| |-|\.|$))/gi
 
   const results = [...name.matchAll(episodePattern)]
 
