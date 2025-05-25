@@ -1,2 +1,1 @@
-import './dotenv';
 import './commands';

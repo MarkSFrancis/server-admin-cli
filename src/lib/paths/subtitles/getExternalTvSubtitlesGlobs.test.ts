@@ -1,5 +1,5 @@
 import { getExternalTvSubtitlesGlobs } from './getExternalTvSubtitlesGlobs';
-import minimatch from 'minimatch';
+import { minimatch } from 'minimatch';
 import { it } from 'node:test';
 import assert from 'node:assert';
 
