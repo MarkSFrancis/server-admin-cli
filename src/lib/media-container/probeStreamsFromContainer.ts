@@ -1,7 +1,7 @@
-import { ffprobe, type FfprobeData } from 'fluent-ffmpeg'
-import { promisify } from 'util'
+import { ffprobe, type FfprobeData } from 'fluent-ffmpeg';
+import { promisify } from 'util';
 
-const ffprobeAsync = promisify<string, FfprobeData>(ffprobe)
+const ffprobeAsync = promisify<string, FfprobeData>(ffprobe);
 
 /**
  * The known types used by a stream's `codec_type`
@@ -15,7 +15,7 @@ export enum STREAM_TYPES {
 }
 
 export const probeDataFromContainer = async (path: string) => {
-  const result = await ffprobeAsync(path)
+  const result = await ffprobeAsync(path);
 
-  return result
-}
+  return result;
+};

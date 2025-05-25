@@ -1,21 +1,32 @@
-import { probeDataFromContainer } from '../probeStreamsFromContainer'
-import { stub } from '@/lib/test-utils/stub'
-import { FfprobeStream, type FfprobeData } from 'fluent-ffmpeg'
-import { getAudioStreamsFromContainer } from './getAudioStreamsFromContainer'
+import { probeDataFromContainer } from '../probeStreamsFromContainer';
+import { stub } from '@/lib/test-utils/stub';
+import { type FfprobeData } from 'fluent-ffmpeg';
+import { mock, beforeEach, it } from 'node:test';
+import assert from 'node:assert';
 
-jest.mock('../probeStreamsFromContainer')
+const probeDataFromContainerMock = mock.fn<typeof probeDataFromContainer>();
+mock.module('../probeStreamsFromContainer', {
+  namedExports: {
+    probeDataFromContainer: probeDataFromContainerMock,
+    STREAM_TYPES: {
+      audio: 'audio',
+    },
+  },
+});
 
-const probeDataFromContainerMock = jest.mocked(probeDataFromContainer)
+const { getAudioStreamsFromContainer } = await import(
+  './getAudioStreamsFromContainer'
+);
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  probeDataFromContainerMock.mock.resetCalls();
 
-  probeDataFromContainerMock.mockResolvedValue(
+  probeDataFromContainerMock.mock.mockImplementation(async () =>
     stub<FfprobeData>({
       streams: [],
     })
-  )
-})
+  );
+});
 
 it('should skip non-audio streams', async () => {
   const testStream = stub<FfprobeData>({
@@ -24,14 +35,14 @@ it('should skip non-audio streams', async () => {
         codec_type: 'attachment',
       },
     ],
-  })
+  });
 
-  probeDataFromContainerMock.mockResolvedValue(testStream)
+  probeDataFromContainerMock.mock.mockImplementation(async () => testStream);
 
-  const streams = await getAudioStreamsFromContainer('/var/file.mkv')
+  const streams = await getAudioStreamsFromContainer('/var/file.mkv');
 
-  expect(streams).toEqual([])
-})
+  assert.deepStrictEqual(streams, []);
+});
 
 it('should probe its data and return audio streams', async () => {
   const testData = stub<FfprobeData>({
@@ -43,14 +54,11 @@ it('should probe its data and return audio streams', async () => {
         codec_type: 'audio',
       },
     ],
-  })
+  });
 
-  probeDataFromContainerMock.mockResolvedValue(testData)
+  probeDataFromContainerMock.mock.mockImplementation(async () => testData);
 
-  const streams = await getAudioStreamsFromContainer('/var/file.mkv')
+  const streams = await getAudioStreamsFromContainer('/var/file.mkv');
 
-  expect(streams).toEqual<FfprobeStream[]>([
-    testData.streams[0],
-    testData.streams[1],
-  ])
-})
+  assert.deepStrictEqual(streams, [testData.streams[0], testData.streams[1]]);
+});

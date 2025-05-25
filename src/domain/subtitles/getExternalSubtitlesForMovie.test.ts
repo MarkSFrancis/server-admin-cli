@@ -1,68 +1,91 @@
-import { resolveGlob } from '@/lib/fs/glob/resolveGlob'
-import { getExternalMovieSubtitlesGlobs } from '@/lib/paths/subtitles/getExternalMovieSubtitlesGlobs'
-import { getExternalSubtitlesForMovie } from './getExternalSubtitlesForMovie'
+import { readFromGlob } from '@/lib/fs/glob/resolveGlob';
+import { getExternalMovieSubtitlesGlobs } from '@/lib/paths/subtitles/getExternalMovieSubtitlesGlobs';
+import { beforeEach, test, mock } from 'node:test';
+import assert from 'node:assert';
 
-jest.mock('@/lib/paths/subtitles/getExternalMovieSubtitlesGlobs')
-jest.mock('@/lib/fs/glob/resolveGlob')
+const readFromGlobMock = mock.fn<typeof readFromGlob>();
 
-const getExternalMovieSubtitlesGlobsMock = jest.mocked(
-  getExternalMovieSubtitlesGlobs
-)
-const resolveGlobMock = jest.mocked(resolveGlob)
+mock.module('@/lib/fs/glob/resolveGlob', {
+  namedExports: { readFromGlob: readFromGlobMock },
+});
+
+const getExternalMovieSubtitlesGlobsMock =
+  mock.fn<typeof getExternalMovieSubtitlesGlobs>();
+
+mock.module('@/lib/paths/subtitles/getExternalMovieSubtitlesGlobs', {
+  namedExports: {
+    getExternalMovieSubtitlesGlobs: getExternalMovieSubtitlesGlobsMock,
+  },
+});
+const { getExternalSubtitlesForMovie } = await import(
+  './getExternalSubtitlesForMovie'
+);
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  getExternalMovieSubtitlesGlobsMock.mock.resetCalls();
+  getExternalMovieSubtitlesGlobsMock.mock.mockImplementation(() => [
+    'test-glob',
+  ]);
 
-  getExternalMovieSubtitlesGlobsMock.mockReturnValue(['test-glob'])
-  resolveGlobMock.mockResolvedValue([])
-})
+  readFromGlobMock.mock.resetCalls();
+  readFromGlobMock.mock.mockImplementation(async () => []);
+});
 
-it('should get and execute glob', async () => {
-  getExternalMovieSubtitlesGlobsMock.mockReturnValue(['file-glob'])
+test('should get and execute glob', async () => {
+  getExternalMovieSubtitlesGlobsMock.mock.mockImplementation(() => [
+    'file-glob',
+  ]);
 
-  await getExternalSubtitlesForMovie('/var/file.mkv')
+  await getExternalSubtitlesForMovie('/var/file.mkv');
 
-  expect(getExternalMovieSubtitlesGlobsMock).toHaveBeenCalledWith(
-    '/var/file.mkv'
-  )
-  expect(resolveGlobMock).toHaveBeenCalledWith('file-glob')
-})
+  assert.deepStrictEqual(
+    getExternalMovieSubtitlesGlobsMock.mock.calls.map((c) => c.arguments),
+    [['/var/file.mkv']]
+  );
+  assert.deepStrictEqual(
+    readFromGlobMock.mock.calls.map((c) => c.arguments),
+    [['file-glob']]
+  );
+});
 
-it('should get and execute each glob', async () => {
-  getExternalMovieSubtitlesGlobsMock.mockReturnValue([
+test('should get and execute each glob', async () => {
+  getExternalMovieSubtitlesGlobsMock.mock.mockImplementation(() => [
     'file-glob',
     'file-glob-2',
-  ])
+  ]);
 
-  await getExternalSubtitlesForMovie('/var/file.mkv')
+  await getExternalSubtitlesForMovie('/var/file.mkv');
 
-  expect(getExternalMovieSubtitlesGlobsMock).toHaveBeenCalledWith(
-    '/var/file.mkv'
-  )
-  expect(resolveGlobMock).toHaveBeenCalledWith('file-glob')
-  expect(resolveGlobMock).toHaveBeenCalledWith('file-glob-2')
-})
+  assert.deepStrictEqual(
+    getExternalMovieSubtitlesGlobsMock.mock.calls.map((c) => c.arguments),
+    [['/var/file.mkv']]
+  );
+  assert.deepStrictEqual(
+    readFromGlobMock.mock.calls.map((c) => c.arguments),
+    [['file-glob'], ['file-glob-2']]
+  );
+});
 
-it('should return all found paths', async () => {
-  getExternalMovieSubtitlesGlobsMock.mockReturnValue([
+test('should return all found paths', async () => {
+  getExternalMovieSubtitlesGlobsMock.mock.mockImplementation(() => [
     'file-glob-1',
     'file-glob-2',
-  ])
-  resolveGlobMock.mockImplementation(async (glob) => {
+  ]);
+  readFromGlobMock.mock.mockImplementation(async (glob) => {
     if (glob === 'file-glob-1') {
-      return ['file-1', 'file-2']
+      return ['file-1', 'file-2'];
     } else if (glob === 'file-glob-2') {
-      return ['file-3', 'file-4', 'file-5']
+      return ['file-3', 'file-4', 'file-5'];
     } else {
-      throw new Error('Called with non-test glob')
+      throw new Error('Called with non-test glob');
     }
-  })
+  });
 
-  const results = await getExternalSubtitlesForMovie('/var/file.mvk')
+  const results = await getExternalSubtitlesForMovie('/var/file.mkv');
 
-  expect(results).toContain('file-1')
-  expect(results).toContain('file-2')
-  expect(results).toContain('file-3')
-  expect(results).toContain('file-4')
-  expect(results).toContain('file-5')
-})
+  assert.ok(results.includes('file-1'));
+  assert.ok(results.includes('file-2'));
+  assert.ok(results.includes('file-3'));
+  assert.ok(results.includes('file-4'));
+  assert.ok(results.includes('file-5'));
+});

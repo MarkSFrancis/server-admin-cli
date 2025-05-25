@@ -1,60 +1,60 @@
-import { findLanguageByCode } from '@/lib/language/findLanguageByCode'
-import { type SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream'
-import { basename, extname } from 'path'
-import { externalSubtitlesMetaFlags } from './externalSubtitlesMetaFlags'
+import { findLanguageByCode } from '@/lib/language/findLanguageByCode';
+import { type SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream';
+import { basename, extname } from 'path';
+import { externalSubtitlesMetaFlags } from './externalSubtitlesMetaFlags';
 
 export const getSubtitleMetadataFromPath = (path: string): SubtitleMetadata => {
-  const filenameWithExt = basename(path)
-  const extension = extname(filenameWithExt)
+  const filenameWithExt = basename(path);
+  const extension = extname(filenameWithExt);
   let remainingFileNameToParse = filenameWithExt
     .substring(0, filenameWithExt.length - extension.length)
-    .toLowerCase()
+    .toLowerCase();
 
-  let isClosedCaptions: boolean | undefined
-  let isSubtitlesForDeafAndHardOfHearing: boolean | undefined
-  let isForced: boolean | undefined
-  let language: string | undefined
-  let isFilenameSuffixesParsed = false
+  let isClosedCaptions: boolean | undefined;
+  let isSubtitlesForDeafAndHardOfHearing: boolean | undefined;
+  let isForced: boolean | undefined;
+  let language: string | undefined;
+  let isFilenameSuffixesParsed = false;
 
   do {
-    const subtitleFileNameFlags = getNextFlag(remainingFileNameToParse)
+    const subtitleFileNameFlags = getNextFlag(remainingFileNameToParse);
 
     switch (subtitleFileNameFlags.currentFlag) {
       case externalSubtitlesMetaFlags.closedCaptions:
-        isClosedCaptions = true
-        break
+        isClosedCaptions = true;
+        break;
       case externalSubtitlesMetaFlags.isSubtitlesForDeafAndHardOfHearing:
-        isSubtitlesForDeafAndHardOfHearing = true
-        break
+        isSubtitlesForDeafAndHardOfHearing = true;
+        break;
       case externalSubtitlesMetaFlags.forced:
-        isForced = true
-        break
+        isForced = true;
+        break;
       default:
         if (!language) {
           const possibleLanguage = findLanguageByCode(
             subtitleFileNameFlags.currentFlag
-          )
+          );
 
           if (possibleLanguage) {
-            language = subtitleFileNameFlags.currentFlag
-            break
+            language = subtitleFileNameFlags.currentFlag;
+            break;
           }
         }
 
-        isFilenameSuffixesParsed = true
-        break
+        isFilenameSuffixesParsed = true;
+        break;
     }
 
-    remainingFileNameToParse = subtitleFileNameFlags.remainingFileName
-  } while (!isFilenameSuffixesParsed)
+    remainingFileNameToParse = subtitleFileNameFlags.remainingFileName;
+  } while (!isFilenameSuffixesParsed);
 
   return {
     isClosedCaptions: isClosedCaptions ?? isSubtitlesForDeafAndHardOfHearing,
     isForced,
     language,
     codec: extension.length === 0 ? undefined : extension.substring(1),
-  }
-}
+  };
+};
 
 const getNextFlag = (
   fileName: string
@@ -62,17 +62,17 @@ const getNextFlag = (
   const nextFlagStart = Math.max(
     fileName.lastIndexOf('.'),
     fileName.lastIndexOf('_')
-  )
+  );
 
   if (nextFlagStart === -1) {
     return {
       currentFlag: fileName.toLowerCase(),
       remainingFileName: '',
-    }
+    };
   }
 
   return {
     currentFlag: fileName.substring(nextFlagStart + 1).toLowerCase(),
     remainingFileName: fileName.substring(0, nextFlagStart),
-  }
-}
+  };
+};

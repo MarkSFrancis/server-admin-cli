@@ -1,4 +1,4 @@
-import iso6393 from 'iso-639-3'
+import iso6393 from 'iso-639-3';
 
 /**
  * Category of a language:
@@ -28,7 +28,7 @@ export type LanguageType =
   | 'extinct'
   | 'ancient'
   | 'constructed'
-  | 'special'
+  | 'special';
 
 /**
  * Scope of a language:
@@ -43,37 +43,37 @@ export type LanguageType =
  *   — non-language codes
  *   (example: `und` for `Undetermined`)
  */
-export type LanguageScope = 'individual' | 'macrolanguage' | 'special'
+export type LanguageScope = 'individual' | 'macrolanguage' | 'special';
 
 export interface Language {
   /**
    *   Name (example: `'English'`).
    */
-  name: string
+  name: string;
   /**
    *   Type (example: `'living'`).
    */
-  type: LanguageType
+  type: LanguageType;
   /**
    *   Scope (example: `'individual'`)
    */
-  scope: LanguageScope
+  scope: LanguageScope;
   /**
    *   ISO 639-3 code.
    */
-  iso6393: string
+  iso6393: string;
   /**
    * ISO 639-2 (bibliographic) code (example: `'eng'`).
    */
-  iso6392B?: string | undefined
+  iso6392B?: string | undefined;
   /**
    * ISO 639-2 (terminologic) code (example: `'eng'`).
    */
-  iso6392T?: string | undefined
+  iso6392T?: string | undefined;
   /**
    * ISO 639-1 code (example: `'en'`).
    */
-  iso6391?: string | undefined
+  iso6391?: string | undefined;
 }
 
-export const Iso6393Languages = iso6393 as Language[]
+export const Iso6393Languages = iso6393 as Language[];

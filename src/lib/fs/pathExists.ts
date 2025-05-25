@@ -1,11 +1,11 @@
-import { type Stats } from 'fs'
-import { stat } from 'fs/promises'
+import { type Stats } from 'fs';
+import { stat } from 'fs/promises';
 
 export const pathExists = async (path: string): Promise<false | Stats> => {
   try {
-    const stats = await stat(path)
-    return stats
+    const stats = await stat(path);
+    return stats;
   } catch {
-    return false
+    return false;
   }
-}
+};

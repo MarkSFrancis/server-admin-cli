@@ -1,25 +1,22 @@
-import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob'
-import { resolveGlob } from '@/lib/fs/glob/resolveGlob'
-import { SpecialFolders } from '@/lib/paths/SpeciaFolders'
+import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob';
+import { readFilesFromGlob } from '@/lib/fs/glob/resolveGlob';
+import { SpecialFolders } from '@/lib/paths/SpeciaFolders';
 import {
   MUSIC_FILE_EXTENSIONS,
   extensionsToGlobPattern,
-} from '@/lib/paths/exts'
+} from '@/lib/paths/exts';
 
 export interface NasMusicEntry extends Record<string, string | number> {
-  path: string
+  path: string;
 }
 
 export const getNasMusicLibraryFiles = async () => {
-  const musicFolder = SpecialFolders.Music
-  const musicGlob = convertPathToGlob(musicFolder) + '**/*'
+  const musicFolder = SpecialFolders.Music;
+  const musicGlob = convertPathToGlob(musicFolder) + '**/*';
 
-  const files = await resolveGlob(
-    `${musicGlob}${extensionsToGlobPattern(MUSIC_FILE_EXTENSIONS)}`,
-    {
-      nodir: true,
-    }
-  )
+  const files = await readFilesFromGlob(
+    `${musicGlob}${extensionsToGlobPattern(MUSIC_FILE_EXTENSIONS)}`
+  );
 
-  return files
-}
+  return files;
+};

@@ -1,1 +1,1 @@
-export const DOCS_BASE_URL = 'https://server-admin-docs.vercel.app/'
+export const DOCS_BASE_URL = 'https://server-admin-docs.vercel.app/';

@@ -1,26 +1,26 @@
-import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob'
-import { SUBTITLE_FILE_EXTENSIONS } from '@/lib/paths/exts'
-import { basename, extname } from 'path'
+import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob';
+import { SUBTITLE_FILE_EXTENSIONS } from '@/lib/paths/exts';
+import { basename, extname } from 'path';
 
 export const getExternalTvSubtitlesGlobs = (path: string): string[] => {
-  path = path.replaceAll('\\', '/') // windows support
+  path = path.replaceAll('\\', '/'); // windows support
 
-  const pathExt = extname(path)
-  const filename = basename(path, pathExt)
+  const pathExt = extname(path);
+  const filename = basename(path, pathExt);
   const parentDir = path.substring(
     0,
     path.length - (filename.length + pathExt.length + '/'.length)
-  )
+  );
 
   const fileGlobs = [
     childFolderContainingFilenameGlob(parentDir, filename),
     childFolderWithFileContainingFilenameGlob(parentDir, filename),
-  ]
+  ];
 
-  return fileGlobs
-}
+  return fileGlobs;
+};
 
-const subtitleFileGlob = `*+(${SUBTITLE_FILE_EXTENSIONS.join('|')})`
+const subtitleFileGlob = `*+(${SUBTITLE_FILE_EXTENSIONS.join('|')})`;
 
 const childFolderContainingFilenameGlob = (
   parentDir: string,
@@ -28,7 +28,7 @@ const childFolderContainingFilenameGlob = (
 ) =>
   `${convertPathToGlob(parentDir)}/**/${convertPathToGlob(
     filename
-  )}/**/${subtitleFileGlob}`
+  )}/**/${subtitleFileGlob}`;
 
 const childFolderWithFileContainingFilenameGlob = (
   parentDir: string,
@@ -36,4 +36,4 @@ const childFolderWithFileContainingFilenameGlob = (
 ) =>
   `${convertPathToGlob(parentDir)}/**/${convertPathToGlob(
     filename
-  )}${subtitleFileGlob}`
+  )}${subtitleFileGlob}`;

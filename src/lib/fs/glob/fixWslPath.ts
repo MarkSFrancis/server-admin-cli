@@ -3,15 +3,15 @@
  * @param path The path to fix
  */
 export const fixWslPath = (path: string) => {
-  const windowsDrivePrefixRegex = /^([A-Z|a-z]):/g
+  const windowsDrivePrefixRegex = /^([A-Z|a-z]):/g;
   if (path.match(windowsDrivePrefixRegex) && process.platform !== 'win32') {
     // Assumes all drives are mapped identically on both WSL and Windows
-    const driveLetter = path.substring(0, 1)
+    const driveLetter = path.substring(0, 1);
 
     path = path
       .replaceAll(windowsDrivePrefixRegex, `/mnt/${driveLetter.toLowerCase()}`)
-      .replaceAll('\\', '/')
+      .replaceAll('\\', '/');
   }
 
-  return path
-}
+  return path;
+};

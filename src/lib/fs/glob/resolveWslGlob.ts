@@ -1,20 +1,21 @@
-import { GlobOptionsWithFileTypesUnset } from 'glob'
-import { fixWslPath } from './fixWslPath'
-import { resolveGlob } from './resolveGlob'
+import { fixWslPath } from './fixWslPath';
+import { readFilesFromGlob, readFromGlob } from './resolveGlob';
 
 export const resolveWslGlob = async (
   glob: string,
-  options?: GlobOptionsWithFileTypesUnset
+  options?: { nodir?: boolean }
 ) => {
-  const fixedGlob = fixWslGlob(glob)
+  const fixedGlob = fixWslGlob(glob);
 
-  const results = await resolveGlob(fixedGlob, options)
-
-  return results
-}
+  if (options?.nodir) {
+    return readFilesFromGlob(fixedGlob);
+  } else {
+    return readFromGlob(fixedGlob);
+  }
+};
 
 export const fixWslGlob = (glob: string) => {
-  const fixedGlob = fixWslPath(glob)
+  const fixedGlob = fixWslPath(glob);
 
-  return fixedGlob
-}
+  return fixedGlob;
+};

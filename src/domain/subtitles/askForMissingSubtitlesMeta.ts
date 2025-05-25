@@ -1,57 +1,41 @@
-import { Iso6393Languages } from '@/lib/language/languages'
-import { type SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream'
-import { prompt, type QuestionCollection } from 'inquirer'
+import { Iso6393Languages } from '@/lib/language/languages';
+import { type SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream';
+import { confirm, select } from '@inquirer/prompts';
 
 export const askForMissingSubtitlesMeta = async (meta: SubtitleMetadata) => {
   const newMeta: SubtitleMetadata = {
     ...meta,
-  }
+  };
 
   if (!meta.language) {
-    const languageQuestion: QuestionCollection<{ language: string }> = [
-      {
-        name: 'language',
-        message: 'What language are these subtitles?',
-        type: 'list',
-        choices: Iso6393Languages.map((l) => l.iso6392B).filter((l) => !!l),
-        default: 'eng',
-      },
-    ]
+    const response = await select<string>({
+      message: 'What language are these subtitles?',
+      choices: Iso6393Languages.map((l) => l.iso6392B).filter(
+        (l): l is string => !!l
+      ),
+      default: 'eng',
+    } as const);
 
-    const response = await prompt(languageQuestion)
-
-    newMeta.language = response.language
+    newMeta.language = response;
   }
 
   if (typeof meta.isForced === 'undefined') {
-    const forcedQuestion: QuestionCollection<{ forced: boolean }> = [
-      {
-        name: 'forced',
-        message: 'Are these forced captions?',
-        type: 'confirm',
-        default: false,
-      },
-    ]
+    const response = await confirm({
+      message: 'Are these forced captions?',
+      default: false,
+    });
 
-    const response = await prompt(forcedQuestion)
-
-    newMeta.isForced = response.forced
+    newMeta.isForced = response;
   }
 
   if (typeof meta.isClosedCaptions === 'undefined') {
-    const ccQuestion: QuestionCollection<{ cc: boolean }> = [
-      {
-        name: 'cc',
-        message: 'Are these closed captions?',
-        type: 'confirm',
-        default: false,
-      },
-    ]
+    const response = await confirm({
+      message: 'Are these closed captions?',
+      default: false,
+    });
 
-    const response = await prompt(ccQuestion)
-
-    newMeta.isClosedCaptions = response.cc
+    newMeta.isClosedCaptions = response;
   }
 
-  return newMeta
-}
+  return newMeta;
+};

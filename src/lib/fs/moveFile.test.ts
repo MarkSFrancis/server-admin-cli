@@ -1,77 +1,94 @@
-import { type Stats } from 'fs'
-import { mkdir, rename } from 'fs/promises'
-import { stub } from '../test-utils/stub'
-import { pathExists } from './pathExists'
-import { moveFile } from './moveFile'
+import { type Stats } from 'fs';
+import { mkdir, rename } from 'fs/promises';
+import { stub } from '../test-utils/stub';
+import { pathExists } from './pathExists';
+import { mock, beforeEach, it } from 'node:test';
+import assert from 'node:assert';
 
-jest.mock('fs/promises')
-jest.mock('./pathExists')
+const mkdirMock = mock.fn<typeof mkdir>();
+const renameMock = mock.fn<typeof rename>();
+const pathExistsMock = mock.fn<typeof pathExists>();
 
-const mkdirMock = jest.mocked(mkdir)
-const renameMock = jest.mocked(rename)
-const pathExistsMock = jest.mocked(pathExists)
+mock.module('fs/promises', {
+  namedExports: {
+    mkdir: mkdirMock,
+    rename: renameMock,
+  },
+});
+mock.module('./pathExists', {
+  namedExports: {
+    pathExists: pathExistsMock,
+  },
+});
+
+const { moveFile } = await import('./moveFile');
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  mkdirMock.mock.resetCalls();
+  renameMock.mock.resetCalls();
+  pathExistsMock.mock.resetCalls();
 
-  pathExistsMock.mockResolvedValue(false)
-})
+  pathExistsMock.mock.mockImplementation(async () => false);
+});
 
 it('should throw if `override` is `false` and the file already exists', async () => {
-  pathExistsMock.mockResolvedValue(stub<Stats>({}))
+  pathExistsMock.mock.mockImplementation(async () => stub<Stats>({}));
 
-  await expect(
+  await assert.rejects(
     async () =>
       await moveFile('/var/source/file1.txt', '/var/dest/file1.txt', {
         overwrite: false,
       })
-  ).rejects.toThrowError()
+  );
 
-  expect(pathExists).toHaveBeenCalledWith('/var/dest/file1.txt')
-  expect(renameMock).not.toHaveBeenCalled()
-})
+  assert.deepStrictEqual(
+    pathExistsMock.mock.calls.map((c) => c.arguments),
+    [['/var/dest/file1.txt']]
+  );
+  assert.strictEqual(renameMock.mock.calls.length, 0);
+});
 
 it('should create the destination folder', async () => {
   await moveFile('/var/source/file1.txt', '/var/dest/file1.txt', {
     overwrite: false,
-  })
+  });
 
-  expect(mkdirMock).toHaveBeenCalledWith<Parameters<typeof mkdir>>(
-    '/var/dest',
-    { recursive: true }
-  )
-})
+  assert.deepStrictEqual(
+    mkdirMock.mock.calls.map((c) => c.arguments),
+    [['/var/dest', { recursive: true }]]
+  );
+});
 
 it('should override if `override` is `true` and the file already exists', async () => {
-  pathExistsMock.mockResolvedValue(stub<Stats>({}))
+  pathExistsMock.mock.mockImplementation(async () => stub<Stats>({}));
 
   await moveFile('/var/source/file1.txt', '/var/dest/file1.txt', {
     overwrite: true,
-  })
+  });
 
-  expect(mkdirMock).toHaveBeenCalledWith<Parameters<typeof mkdir>>(
-    '/var/dest',
-    { recursive: true }
-  )
-  expect(renameMock).toHaveBeenCalledWith(
-    '/var/source/file1.txt',
-    '/var/dest/file1.txt'
-  )
-})
+  assert.deepStrictEqual(
+    mkdirMock.mock.calls.map((c) => c.arguments),
+    [['/var/dest', { recursive: true }]]
+  );
+  assert.deepStrictEqual(
+    renameMock.mock.calls.map((c) => c.arguments),
+    [['/var/source/file1.txt', '/var/dest/file1.txt']]
+  );
+});
 
 it('should move the file to the new path if `override` is `false` and the file does not already exist', async () => {
-  pathExistsMock.mockResolvedValue(false)
+  pathExistsMock.mock.mockImplementation(async () => false);
 
   await moveFile('/var/source/file1.txt', '/var/dest/file1.txt', {
     overwrite: false,
-  })
+  });
 
-  expect(mkdirMock).toHaveBeenCalledWith<Parameters<typeof mkdir>>(
-    '/var/dest',
-    { recursive: true }
-  )
-  expect(renameMock).toHaveBeenCalledWith(
-    '/var/source/file1.txt',
-    '/var/dest/file1.txt'
-  )
-})
+  assert.deepStrictEqual(
+    mkdirMock.mock.calls.map((c) => c.arguments),
+    [['/var/dest', { recursive: true }]]
+  );
+  assert.deepStrictEqual(
+    renameMock.mock.calls.map((c) => c.arguments),
+    [['/var/source/file1.txt', '/var/dest/file1.txt']]
+  );
+});

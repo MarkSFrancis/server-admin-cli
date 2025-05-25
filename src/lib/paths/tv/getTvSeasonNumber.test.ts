@@ -1,61 +1,68 @@
-import { promptForInput } from '../../console/promptForInput'
-import { getTvSeasonNumber } from './getTvSeasonNumber'
+import { promptForInput } from '../../console/promptForInput';
+import { mock, it, beforeEach } from 'node:test';
+import assert from 'node:assert';
 
-jest.mock('../../console/promptForInput')
+const promptForInputMock = mock.fn<typeof promptForInput>();
 
-const promptForInputMock = jest.mocked(promptForInput)
+mock.module('../../console/promptForInput', {
+  namedExports: {
+    promptForInput: promptForInputMock,
+  },
+});
+
+const { getTvSeasonNumber } = await import('./getTvSeasonNumber');
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  promptForInputMock.mock.resetCalls();
 
-  promptForInputMock.mockRejectedValue(
-    new Error('Mock should not have been called')
-  )
-})
+  promptForInputMock.mock.mockImplementation(async () => {
+    throw new Error('Mock should not have been called');
+  });
+});
 
 it('should return 1 when the path includes "S1" in a a parent folder', async () => {
-  const seasonNumber = await getTvSeasonNumber('/S1/E01.mkv')
+  const seasonNumber = await getTvSeasonNumber('/S1/E01.mkv');
 
-  expect(seasonNumber).toEqual(1)
-})
+  assert.strictEqual(seasonNumber, 1);
+});
 
 it('should return 2 when the path includes "Season 2" in a a parent folder', async () => {
-  const seasonNumber = await getTvSeasonNumber('/Season 2/E01.mkv')
+  const seasonNumber = await getTvSeasonNumber('/Season 2/E01.mkv');
 
-  expect(seasonNumber).toEqual(2)
-})
+  assert.strictEqual(seasonNumber, 2);
+});
 
 it('should return 1 when the basename includes "S01"', async () => {
-  const seasonNumber = await getTvSeasonNumber('/S01E01.mkv')
+  const seasonNumber = await getTvSeasonNumber('/S01E01.mkv');
 
-  expect(seasonNumber).toEqual(1)
-})
+  assert.strictEqual(seasonNumber, 1);
+});
 
 it('should return 2 when the basename includes "Season 2"', async () => {
-  const seasonNumber = await getTvSeasonNumber('/Season 2 E01.mkv')
+  const seasonNumber = await getTvSeasonNumber('/Season 2 E01.mkv');
 
-  expect(seasonNumber).toEqual(2)
-})
+  assert.strictEqual(seasonNumber, 2);
+});
 
 it('should ask for input when the path and basename include conflicting season IDs', async () => {
-  promptForInputMock.mockResolvedValue('5')
-  const seasonNumber = await getTvSeasonNumber('/S01/Season 2 E01.mkv')
+  promptForInputMock.mock.mockImplementation(async () => '5');
+  const seasonNumber = await getTvSeasonNumber('/S01/Season 2 E01.mkv');
 
-  expect(promptForInputMock).toHaveBeenCalledTimes(1)
-  expect(seasonNumber).toEqual(5)
-})
+  assert.strictEqual(promptForInputMock.mock.callCount(), 1);
+  assert.strictEqual(seasonNumber, 5);
+});
 
 it('should ask for input when no season IDs are found', async () => {
-  promptForInputMock.mockResolvedValue('5')
-  const seasonNumber = await getTvSeasonNumber('/E01.mkv')
+  promptForInputMock.mock.mockImplementation(async () => '5');
+  const seasonNumber = await getTvSeasonNumber('/E01.mkv');
 
-  expect(promptForInputMock).toHaveBeenCalledTimes(1)
-  expect(seasonNumber).toEqual(5)
-})
+  assert.strictEqual(promptForInputMock.mock.callCount(), 1);
+  assert.strictEqual(seasonNumber, 5);
+});
 
 it('should use season when the path and basename include matching season IDs', async () => {
-  const seasonNumber = await getTvSeasonNumber('/S02/Season 2 E01.mkv')
+  const seasonNumber = await getTvSeasonNumber('/S02/Season 2 E01.mkv');
 
-  expect(promptForInputMock).toHaveBeenCalledTimes(0)
-  expect(seasonNumber).toEqual(2)
-})
+  assert.strictEqual(promptForInputMock.mock.callCount(), 0);
+  assert.strictEqual(seasonNumber, 2);
+});

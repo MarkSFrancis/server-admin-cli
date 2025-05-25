@@ -1,5 +1,5 @@
-export enum externalSubtitlesMetaFlags {
-  forced = 'forced',
-  closedCaptions = 'cc',
-  isSubtitlesForDeafAndHardOfHearing = 'sdh',
-}
+export const externalSubtitlesMetaFlags = {
+  forced: 'forced',
+  closedCaptions: 'cc',
+  isSubtitlesForDeafAndHardOfHearing: 'sdh',
+} as const;

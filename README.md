@@ -9,7 +9,6 @@ This project uses [commander.js](https://github.com/tj/commander.js/) to enable 
 ## Prerequisites
 
 - NodeJS
-- yarn
 
 ## Secrets
 
@@ -42,8 +41,8 @@ If you use both, the config file will override your environment variables
 ## Getting Started
 
 ```sh
-yarn install
-yarn start --help
+npm install
+npm start --help
 ```
 
 ### Recommended Keys

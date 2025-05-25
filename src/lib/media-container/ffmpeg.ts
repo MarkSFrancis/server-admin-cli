@@ -1,4 +1,4 @@
-import { type FfmpegCommand } from 'fluent-ffmpeg'
+import { type FfmpegCommand } from 'fluent-ffmpeg';
 
 export const runFfmpeg = async (command: FfmpegCommand) => {
   console.info(
@@ -7,17 +7,17 @@ export const runFfmpeg = async (command: FfmpegCommand) => {
       ._getArguments()
       .map((a) => `"${a}"`)
       .join(' ')
-  )
+  );
 
   await new Promise<void>((resolve, reject) => {
     command.on('error', (err: Error) => {
-      reject(err)
-    })
+      reject(err);
+    });
     command.on('progress', (data) => {
-      console.info(`Processing: ${data.percent}% done`)
-    })
+      console.info(`Processing: ${data.percent}% done`);
+    });
     command.on('end', () => {
-      resolve()
-    })
-  })
-}
+      resolve();
+    });
+  });
+};

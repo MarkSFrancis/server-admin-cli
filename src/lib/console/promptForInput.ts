@@ -1,13 +1,9 @@
-import { prompt } from 'inquirer'
+import { input } from '@inquirer/prompts';
 
 export const promptForInput = async (question: string) => {
-  const response = await prompt([
-    {
-      name: 'question',
-      message: question,
-      type: 'input',
-    },
-  ])
+  const response = await input({
+    message: question,
+  });
 
-  return response.question as string
-}
+  return response;
+};

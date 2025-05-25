@@ -1,21 +1,32 @@
-import { probeDataFromContainer } from '../probeStreamsFromContainer'
-import { stub } from '@/lib/test-utils/stub'
-import { type FfprobeData } from 'fluent-ffmpeg'
-import { getVideoStreamsFromContainer } from './getVideoStreamsFromContainer'
+import { probeDataFromContainer } from '../probeStreamsFromContainer';
+import { stub } from '@/lib/test-utils/stub';
+import { type FfprobeData } from 'fluent-ffmpeg';
+import { mock, it, beforeEach } from 'node:test';
+import assert from 'node:assert';
 
-jest.mock('../probeStreamsFromContainer')
+const probeDataFromContainerMock = mock.fn<typeof probeDataFromContainer>();
+mock.module('../probeStreamsFromContainer', {
+  namedExports: {
+    probeDataFromContainer: probeDataFromContainerMock,
+    STREAM_TYPES: {
+      video: 'video',
+    },
+  },
+});
 
-const probeDataFromContainerMock = jest.mocked(probeDataFromContainer)
+const { getVideoStreamsFromContainer } = await import(
+  './getVideoStreamsFromContainer'
+);
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  probeDataFromContainerMock.mock.resetCalls();
 
-  probeDataFromContainerMock.mockResolvedValue(
+  probeDataFromContainerMock.mock.mockImplementation(async () =>
     stub<FfprobeData>({
       streams: [],
     })
-  )
-})
+  );
+});
 
 it('should skip non-video streams', async () => {
   const testStream = stub<FfprobeData>({
@@ -24,14 +35,14 @@ it('should skip non-video streams', async () => {
         codec_type: 'attachment',
       },
     ],
-  })
+  });
 
-  probeDataFromContainerMock.mockResolvedValue(testStream)
+  probeDataFromContainerMock.mock.mockImplementation(async () => testStream);
 
-  const streams = await getVideoStreamsFromContainer('/var/file.mkv')
+  const streams = await getVideoStreamsFromContainer('/var/file.mkv');
 
-  expect(streams).toEqual([])
-})
+  assert.deepStrictEqual(streams, []);
+});
 
 it('should probe its data and return video streams', async () => {
   const testData = stub<FfprobeData>({
@@ -43,11 +54,11 @@ it('should probe its data and return video streams', async () => {
         codec_type: 'video',
       },
     ],
-  })
+  });
 
-  probeDataFromContainerMock.mockResolvedValue(testData)
+  probeDataFromContainerMock.mock.mockImplementation(async () => testData);
 
-  const streams = await getVideoStreamsFromContainer('/var/file.mkv')
+  const streams = await getVideoStreamsFromContainer('/var/file.mkv');
 
-  expect(streams).toEqual([testData.streams[0], testData.streams[1]])
-})
+  assert.deepStrictEqual(streams, [testData.streams[0], testData.streams[1]]);
+});

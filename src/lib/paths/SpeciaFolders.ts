@@ -1,9 +1,9 @@
-import { platform } from 'os'
+import { platform } from 'os';
 
 const pathToShare = osValue({
   default: '/mnt/z',
   darwin: '/Volumes/tank',
-})
+} as const);
 
 export const SpecialFolders = {
   Books: `${pathToShare}/media/books/`,
@@ -13,18 +13,18 @@ export const SpecialFolders = {
   Music: `${pathToShare}/media/music/library/`,
   Pictures: `${pathToShare}/media/pictures/`,
   Tv: `${pathToShare}/media/tv-series`,
-}
+} as const;
 
 export type SpecialFolders =
-  (typeof SpecialFolders)[keyof typeof SpecialFolders]
+  (typeof SpecialFolders)[keyof typeof SpecialFolders];
 
 function osValue<T>(
   value: Partial<Record<NodeJS.Platform, T>> & { default: T }
-) {
-  const os = platform()
-  if (os in value) {
-    return value[os]
+): T {
+  const os = platform();
+  if (os in value && value[os] !== undefined) {
+    return value[os];
   } else {
-    return value.default
+    return value.default;
   }
 }

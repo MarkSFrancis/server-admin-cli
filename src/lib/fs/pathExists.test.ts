@@ -1,36 +1,45 @@
-import { type Stats } from 'fs'
-import { stat } from 'fs/promises'
-import { stub } from '../test-utils/stub'
-import { pathExists } from './pathExists'
+import { type Stats } from 'fs';
+import { stub } from '../test-utils/stub';
+import { mock, beforeEach, it } from 'node:test';
+import assert from 'node:assert';
 
-jest.mock('fs/promises')
+const statMock = mock.fn<(path: string) => Promise<Stats>>();
+mock.module('fs/promises', {
+  namedExports: {
+    stat: statMock,
+  },
+});
 
-const statMock = jest.mocked(stat)
+const { pathExists } = await import('./pathExists');
 
 beforeEach(() => {
-  jest.resetAllMocks()
-})
+  statMock.mock.resetCalls();
+});
 
 it('should return `Stats` if the path exists', async () => {
-  statMock.mockResolvedValue(stub<Stats>({}))
+  statMock.mock.mockImplementation(async () => stub<Stats>({}));
 
-  const exists = await pathExists('/var/file.txt')
+  const exists = await pathExists('/var/file.txt');
 
-  expect(exists).toEqual({})
-})
+  assert.deepStrictEqual(exists, {});
+});
 
 it('should return `false` if the path does not exist', async () => {
-  statMock.mockRejectedValue(new Error())
+  statMock.mock.mockImplementation(() => {
+    throw new Error();
+  });
 
-  const exists = await pathExists('/var/file.txt')
+  const exists = await pathExists('/var/file.txt');
 
-  expect(exists).toEqual(false)
-})
+  assert.strictEqual(exists, false);
+});
 
 it('should return `false` if the path is invalid', async () => {
-  statMock.mockRejectedValue(new Error())
+  statMock.mock.mockImplementation(() => {
+    throw new Error();
+  });
 
-  const exists = await pathExists('this?is?an?invalid?path')
+  const exists = await pathExists('this?is?an?invalid?path');
 
-  expect(exists).toEqual(false)
-})
+  assert.strictEqual(exists, false);
+});

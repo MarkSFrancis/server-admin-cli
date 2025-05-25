@@ -1,19 +1,21 @@
-import { convertPathToGlob } from './convertPathToGlob'
+import { convertPathToGlob } from './convertPathToGlob';
+import { it } from 'node:test';
+import assert from 'node:assert';
 
 it('should escape all special characters', () => {
-  const escaped = convertPathToGlob('^[]()?!+@|*')
+  const escaped = convertPathToGlob('^[]()?!+@|*');
 
-  expect(escaped).toEqual('\\^\\[\\]\\(\\)\\?\\!\\+\\@\\|\\*')
-})
+  assert.strictEqual(escaped, '\\^\\[\\]\\(\\)\\?\\!\\+\\@\\|\\*');
+});
 
 it('should escape multiple instaces of the same special character', () => {
-  const escaped = convertPathToGlob('[[[test]]]')
+  const escaped = convertPathToGlob('[[[test]]]');
 
-  expect(escaped).toEqual('\\[\\[\\[test\\]\\]\\]')
-})
+  assert.strictEqual(escaped, '\\[\\[\\[test\\]\\]\\]');
+});
 
 it('should ignore non-special characters', () => {
-  const escaped = convertPathToGlob('test')
+  const escaped = convertPathToGlob('test');
 
-  expect(escaped).toEqual('test')
-})
+  assert.strictEqual(escaped, 'test');
+});

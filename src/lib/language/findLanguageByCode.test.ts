@@ -1,43 +1,45 @@
-import { findLanguageByCode } from './findLanguageByCode'
+import { findLanguageByCode } from './findLanguageByCode';
+import { it } from 'node:test';
+import assert from 'node:assert';
 
 it('should return English for "en"', () => {
-  const language = findLanguageByCode('en')
+  const language = findLanguageByCode('en');
 
-  expect(language?.name).toEqual('English')
-})
+  assert.strictEqual(language?.name, 'English');
+});
 
 it('should return English for "eng"', () => {
-  const language = findLanguageByCode('eng')
+  const language = findLanguageByCode('eng');
 
-  expect(language?.name).toEqual('English')
-})
+  assert.strictEqual(language?.name, 'English');
+});
 
 it('should return English for "English"', () => {
-  const language = findLanguageByCode('English')
+  const language = findLanguageByCode('English');
 
-  expect(language?.name).toEqual('English')
-})
+  assert.strictEqual(language?.name, 'English');
+});
 
 it('should return `undefined` for ""', () => {
-  const language = findLanguageByCode('')
+  const language = findLanguageByCode('');
 
-  expect(language).toBeUndefined()
-})
+  assert.strictEqual(language, undefined);
+});
 
 it('should return English for "ENGLISH"', () => {
-  const language = findLanguageByCode('ENGLISH')
+  const language = findLanguageByCode('ENGLISH');
 
-  expect(language?.name).toEqual('English')
-})
+  assert.strictEqual(language?.name, 'English');
+});
 
 it('should return Modern Greek (1453-) for "Greek"', () => {
-  const language = findLanguageByCode('Greek')
+  const language = findLanguageByCode('Greek');
 
-  expect(language?.name).toEqual('Modern Greek (1453-)')
-})
+  assert.strictEqual(language?.name, 'Modern Greek (1453-)');
+});
 
 it('should return Norwegian Bokmål for "Bokmal"', () => {
-  const language = findLanguageByCode('Bokmal')
+  const language = findLanguageByCode('Bokmal');
 
-  expect(language?.name).toEqual('Norwegian Bokmål')
-})
+  assert.strictEqual(language?.name, 'Norwegian Bokmål');
+});

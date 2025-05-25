@@ -1,26 +1,26 @@
-import { probeDataFromContainer } from '@/lib/media-container/probeStreamsFromContainer'
+import { probeDataFromContainer } from '@/lib/media-container/probeStreamsFromContainer';
 
 export interface BasicMusicMeta {
-  title?: string
-  artist?: string
-  album_artist?: string
-  album?: string
-  track?: string
-  genre?: string
+  title?: string;
+  artist?: string;
+  album_artist?: string;
+  album?: string;
+  track?: string;
+  genre?: string;
 }
 
 export const getMusicMeta = async (path: string) => {
-  const data = await probeDataFromContainer(path)
+  const data = await probeDataFromContainer(path);
 
-  let tags = data.format.tags
+  let tags = data.format.tags;
 
   if (!tags) {
     // Fallback to stream tags (for ogg containers)
-    tags = data.streams[0].tags
+    tags = data.streams[0].tags as Record<string, string> | undefined;
   }
 
-  return tags
-}
+  return tags;
+};
 
 export const getBasicMusicMeta = (
   meta: Record<string, string | number>
@@ -38,9 +38,9 @@ export const getBasicMusicMeta = (
     TRACK,
     genre,
     GENRE,
-  } = meta as Record<string, string>
+  } = meta as Record<string, string | undefined>;
 
-  const trackId = getTrackId(track ?? TRACK)
+  const trackId = getTrackId(track ?? TRACK);
 
   return {
     title: title ?? TITLE,
@@ -49,11 +49,11 @@ export const getBasicMusicMeta = (
     album: album ?? ALBUM,
     track: trackId,
     genre: genre ?? GENRE,
-  }
-}
+  };
+};
 
 const getTrackId = (track: string | undefined) => {
-  const trackId = track?.split(/\/|;/)[0]
+  const trackId = track?.split(/\/|;/)[0];
 
-  return trackId
-}
+  return trackId;
+};

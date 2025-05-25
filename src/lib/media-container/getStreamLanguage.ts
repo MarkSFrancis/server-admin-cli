@@ -1,4 +1,4 @@
-import { type FfprobeStream } from 'fluent-ffmpeg'
+import { type FfprobeStream } from 'fluent-ffmpeg';
 
 /*
   From the MKV spec:
@@ -13,7 +13,8 @@ import { type FfprobeStream } from 'fluent-ffmpeg'
 export const getStreamLanguage = (
   stream: FfprobeStream
 ): string | undefined => {
-  const language = stream.tags?.language
+  const language = (stream.tags as Record<string, string> | undefined)
+    ?.language;
 
-  return language
-}
+  return language;
+};

@@ -1,21 +1,33 @@
-import { probeDataFromContainer } from '../probeStreamsFromContainer'
-import { stub } from '@/lib/test-utils/stub'
-import { type FfprobeData } from 'fluent-ffmpeg'
-import { getSubtitleStreamsFromContainer } from './getSubtitleStreamsFromContainer'
+import { probeDataFromContainer } from '../probeStreamsFromContainer';
+import { stub } from '@/lib/test-utils/stub';
+import { type FfprobeData } from 'fluent-ffmpeg';
+import { mock, beforeEach, it } from 'node:test';
+import assert from 'node:assert';
 
-jest.mock('../probeStreamsFromContainer')
+const probeDataFromContainerMock = mock.fn<typeof probeDataFromContainer>();
 
-const probeDataFromContainerMock = jest.mocked(probeDataFromContainer)
+mock.module('../probeStreamsFromContainer', {
+  namedExports: {
+    probeDataFromContainer: probeDataFromContainerMock,
+    STREAM_TYPES: {
+      subtitles: 'subtitle',
+    },
+  },
+});
+
+const { getSubtitleStreamsFromContainer } = await import(
+  './getSubtitleStreamsFromContainer'
+);
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  probeDataFromContainerMock.mock.resetCalls();
 
-  probeDataFromContainerMock.mockResolvedValue(
+  probeDataFromContainerMock.mock.mockImplementation(async () =>
     stub<FfprobeData>({
       streams: [],
     })
-  )
-})
+  );
+});
 
 it('should skip non-subtitle streams', async () => {
   const testStream = stub<FfprobeData>({
@@ -24,14 +36,14 @@ it('should skip non-subtitle streams', async () => {
         codec_type: 'attachment',
       },
     ],
-  })
+  });
 
-  probeDataFromContainerMock.mockResolvedValue(testStream)
+  probeDataFromContainerMock.mock.mockImplementation(async () => testStream);
 
-  const streams = await getSubtitleStreamsFromContainer('/var/file.mkv')
+  const streams = await getSubtitleStreamsFromContainer('/var/file.mkv');
 
-  expect(streams).toEqual([])
-})
+  assert.deepStrictEqual(streams, []);
+});
 
 it('should probe its data and return subtitle streams', async () => {
   const testData = stub<FfprobeData>({
@@ -43,11 +55,11 @@ it('should probe its data and return subtitle streams', async () => {
         codec_type: 'subtitle',
       },
     ],
-  })
+  });
 
-  probeDataFromContainerMock.mockResolvedValue(testData)
+  probeDataFromContainerMock.mock.mockImplementation(async () => testData);
 
-  const streams = await getSubtitleStreamsFromContainer('/var/file.mkv')
+  const streams = await getSubtitleStreamsFromContainer('/var/file.mkv');
 
-  expect(streams).toEqual([testData.streams[0], testData.streams[1]])
-})
+  assert.deepStrictEqual(streams, [testData.streams[0], testData.streams[1]]);
+});

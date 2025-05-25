@@ -1,8 +1,8 @@
-import { getExternalSubtitlesForMovie } from './getExternalSubtitlesForMovie'
-import { getSubtitleStreamsFromContainer } from '@/lib/media-container/subtitles/getSubtitleStreamsFromContainer'
+import { getExternalSubtitlesForMovie } from './getExternalSubtitlesForMovie';
+import { getSubtitleStreamsFromContainer } from '@/lib/media-container/subtitles/getSubtitleStreamsFromContainer';
 
 export const getSubtitlesForMovie = async (path: string) => {
-  const externalSubtitlePaths = await getExternalSubtitlesForMovie(path)
+  const externalSubtitlePaths = await getExternalSubtitlesForMovie(path);
 
   const subtitleFileStreams = await Promise.all([
     getSubtitleStreamsFromContainer(path).then((streams) =>
@@ -20,12 +20,12 @@ export const getSubtitlesForMovie = async (path: string) => {
           }))
         )
     ),
-  ])
+  ]);
 
   const subtitleStreams = subtitleFileStreams.reduce(
     (cur, next) => [...cur, ...next],
     []
-  )
+  );
 
-  return subtitleStreams
-}
+  return subtitleStreams;
+};
