@@ -1,7 +1,7 @@
-import { ffprobe, type FfprobeData } from 'fluent-ffmpeg';
+import Ffmpeg, { type FfprobeData } from 'fluent-ffmpeg';
 import { promisify } from 'util';
 
-const ffprobeAsync = promisify<string, FfprobeData>(ffprobe);
+const ffprobeAsync = promisify<string, FfprobeData>(Ffmpeg.ffprobe);
 
 /**
  * The known types used by a stream's `codec_type`
