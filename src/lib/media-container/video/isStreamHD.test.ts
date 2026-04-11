@@ -1,6 +1,6 @@
-import { stub } from '@/lib/test-utils/stub';
-import { FfprobeStream } from 'fluent-ffmpeg';
-import { getHighestResolutionStream, isStreamHD } from './isStreamHD';
+import { stub } from '#/lib/test-utils/stub.ts';
+import { type FfprobeStream } from 'fluent-ffmpeg';
+import { getHighestResolutionStream, isStreamHD } from './isStreamHD.ts';
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 

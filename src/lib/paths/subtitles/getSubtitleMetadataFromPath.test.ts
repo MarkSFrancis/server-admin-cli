@@ -1,4 +1,4 @@
-import { getSubtitleMetadataFromPath } from './getSubtitleMetadataFromPath';
+import { getSubtitleMetadataFromPath } from './getSubtitleMetadataFromPath.ts';
 import { it } from 'node:test';
 import assert from 'node:assert';
 

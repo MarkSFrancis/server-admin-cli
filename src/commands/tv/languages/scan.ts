@@ -2,11 +2,11 @@ import { Command, Option } from 'commander';
 import {
   VIDEO_FILE_EXTENSIONS,
   extensionsToGlobPattern,
-} from '@/lib/paths/exts';
-import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob';
-import { promptForMediaGlob } from '@/lib/console/promptForMediaGlob';
-import { getAudioLanguages } from '@/domain/tv/languages/getAudioLanguages';
-import { getSubtitleLanguages } from '@/domain/tv/languages/getSubtitleLanguage';
+} from '#/lib/paths/exts.ts';
+import { resolveWslGlob } from '#/lib/fs/glob/resolveWslGlob.ts';
+import { promptForMediaGlob } from '#/lib/console/promptForMediaGlob.ts';
+import { getAudioLanguages } from '#/domain/tv/languages/getAudioLanguages.ts';
+import { getSubtitleLanguages } from '#/domain/tv/languages/getSubtitleLanguage.ts';
 
 export const tvLanguagesScanCommand = new Command('scan')
   .addOption(

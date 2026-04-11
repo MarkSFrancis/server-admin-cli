@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { TMDB_API_KEY, TMDB_URL } from './config';
-import { type TmdbTvSearchResponse } from './types';
+import { TMDB_API_KEY, TMDB_URL } from './config.ts';
+import { type TmdbTvSearchResponse } from './types.ts';
 
 export const searchForTvShow = async (identifier: string): Promise<unknown> => {
   if (!TMDB_API_KEY) return null;

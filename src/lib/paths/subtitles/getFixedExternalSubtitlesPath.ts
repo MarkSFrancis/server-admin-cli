@@ -1,6 +1,6 @@
-import { findLanguageByCode } from '../../language/findLanguageByCode';
-import { type SubtitleMetadata } from '../../media-container/subtitles/getSubtitleMetadataFromStream';
-import { externalSubtitlesMetaFlags } from './externalSubtitlesMetaFlags';
+import { findLanguageByCode } from '../../language/findLanguageByCode.ts';
+import { type SubtitleMetadata } from '../../media-container/subtitles/getSubtitleMetadataFromStream.ts';
+import { externalSubtitlesMetaFlags } from './externalSubtitlesMetaFlags.ts';
 import { extname } from 'path';
 
 export const getFixedExternalSubtitlesPath = (

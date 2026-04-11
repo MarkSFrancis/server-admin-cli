@@ -2,11 +2,11 @@ import { Command, Option } from 'commander';
 import {
   VIDEO_FILE_EXTENSIONS,
   extensionsToGlobPattern,
-} from '@/lib/paths/exts';
-import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob';
-import { fixExternalSubtitlesFilename } from '@/domain/subtitles/fixSubtitlesFilename';
-import { promptForMediaGlob } from '@/lib/console/promptForMediaGlob';
-import { getExternalSubtitlesForMovie } from '@/domain/subtitles/getExternalSubtitlesForMovie';
+} from '#/lib/paths/exts.ts';
+import { resolveWslGlob } from '#/lib/fs/glob/resolveWslGlob.ts';
+import { fixExternalSubtitlesFilename } from '#/domain/subtitles/fixSubtitlesFilename.ts';
+import { promptForMediaGlob } from '#/lib/console/promptForMediaGlob.ts';
+import { getExternalSubtitlesForMovie } from '#/domain/subtitles/getExternalSubtitlesForMovie.ts';
 
 export const moviesOrganiseCommand = new Command('organise')
   .addOption(

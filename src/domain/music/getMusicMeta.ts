@@ -1,4 +1,4 @@
-import { probeDataFromContainer } from '@/lib/media-container/probeStreamsFromContainer';
+import { probeDataFromContainer } from '#/lib/media-container/probeStreamsFromContainer.ts';
 
 export interface BasicMusicMeta {
   title?: string;

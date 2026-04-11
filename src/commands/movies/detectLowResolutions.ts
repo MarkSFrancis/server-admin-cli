@@ -2,15 +2,15 @@ import { Command, Option } from 'commander';
 import {
   VIDEO_FILE_EXTENSIONS,
   extensionsToGlobPattern,
-} from '@/lib/paths/exts';
-import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob';
-import { promptForMediaGlob } from '@/lib/console/promptForMediaGlob';
-import { getVideoStreamsFromContainer } from '@/lib/media-container/video/getVideoStreamsFromContainer';
+} from '#/lib/paths/exts.ts';
+import { resolveWslGlob } from '#/lib/fs/glob/resolveWslGlob.ts';
+import { promptForMediaGlob } from '#/lib/console/promptForMediaGlob.ts';
+import { getVideoStreamsFromContainer } from '#/lib/media-container/video/getVideoStreamsFromContainer.ts';
 import { statSync } from 'fs';
 import {
   getHighestResolutionStream,
   isStreamHD,
-} from '@/lib/media-container/video/isStreamHD';
+} from '#/lib/media-container/video/isStreamHD.ts';
 
 export const moviesDetectLowResolutionsCommand = new Command(
   'detect-low-resolutions'

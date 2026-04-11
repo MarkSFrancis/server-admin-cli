@@ -1,4 +1,4 @@
-import { fixWslPath } from './fixWslPath';
+import { fixWslPath } from './fixWslPath.ts';
 import { it } from 'node:test';
 import assert from 'node:assert';
 

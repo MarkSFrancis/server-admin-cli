@@ -1,5 +1,5 @@
 import { Argument, Command } from 'commander';
-import { parseItunesLibrary } from '@/domain/music/parseItunesLibrary';
+import { parseItunesLibrary } from '#/domain/music/parseItunesLibrary.ts';
 
 export const musicItunesCommand = new Command('itunes')
   .addArgument(

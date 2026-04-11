@@ -1,12 +1,15 @@
 import { Command } from 'commander';
 import {
-  NasMusicEntry,
+  type NasMusicEntry,
   getNasMusicLibraryFiles,
-} from '@/domain/music/parseNasMusicLibrary';
-import { getBasicMusicMeta, getMusicMeta } from '@/domain/music/getMusicMeta';
-import { parseItunesLibrary } from '@/domain/music/parseItunesLibrary';
+} from '#/domain/music/parseNasMusicLibrary.ts';
+import {
+  getBasicMusicMeta,
+  getMusicMeta,
+} from '#/domain/music/getMusicMeta.ts';
+import { parseItunesLibrary } from '#/domain/music/parseItunesLibrary.ts';
 import { readFile, writeFile } from 'fs/promises';
-import { pathExists } from '@/lib/fs/pathExists';
+import { pathExists } from '#/lib/fs/pathExists.ts';
 import { basename } from 'path';
 
 // TODO - remove user-specific paths

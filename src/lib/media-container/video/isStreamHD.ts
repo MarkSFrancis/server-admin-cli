@@ -1,4 +1,4 @@
-import { FfprobeStream } from 'fluent-ffmpeg';
+import { type FfprobeStream } from 'fluent-ffmpeg';
 
 /**
  * Gets whether the stream is at least 1080p high or 1920p across

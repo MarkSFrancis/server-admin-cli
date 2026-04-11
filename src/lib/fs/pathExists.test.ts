@@ -1,5 +1,5 @@
 import { type Stats } from 'fs';
-import { stub } from '../test-utils/stub';
+import { stub } from '../test-utils/stub.ts';
 import { mock, beforeEach, it } from 'node:test';
 import assert from 'node:assert';
 
@@ -10,7 +10,7 @@ mock.module('fs/promises', {
   },
 });
 
-const { pathExists } = await import('./pathExists');
+const { pathExists } = await import('./pathExists.ts');
 
 beforeEach(() => {
   statMock.mock.resetCalls();

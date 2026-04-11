@@ -1,23 +1,23 @@
-import { getTvEpisodeNumber } from './getTvEpisodeNumber';
-import { getTvSeasonNumber } from './getTvSeasonNumber';
+import { getTvEpisodeNumber } from './getTvEpisodeNumber.ts';
+import { getTvSeasonNumber } from './getTvSeasonNumber.ts';
 import { mock, it, beforeEach } from 'node:test';
 import assert from 'node:assert';
 
 const getTvSeasonNumberMock = mock.fn(getTvSeasonNumber);
 const getTvEpisodeNumberMock = mock.fn(getTvEpisodeNumber);
 
-mock.module('./getTvEpisodeNumber', {
+mock.module('./getTvEpisodeNumber.ts', {
   namedExports: {
     getTvEpisodeNumber: getTvEpisodeNumberMock,
   },
 });
-mock.module('./getTvSeasonNumber', {
+mock.module('./getTvSeasonNumber.ts', {
   namedExports: {
     getTvSeasonNumber: getTvSeasonNumberMock,
   },
 });
 
-const { getFixedTvEpisodePath } = await import('./getFixedTvEpisodePath');
+const { getFixedTvEpisodePath } = await import('./getFixedTvEpisodePath.ts');
 
 const defaults = {
   seasonNumber: 2,

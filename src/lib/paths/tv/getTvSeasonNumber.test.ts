@@ -1,16 +1,16 @@
-import { promptForInput } from '../../console/promptForInput';
+import { promptForInput } from '../../console/promptForInput.ts';
 import { mock, it, beforeEach } from 'node:test';
 import assert from 'node:assert';
 
 const promptForInputMock = mock.fn<typeof promptForInput>();
 
-mock.module('../../console/promptForInput', {
+mock.module('../../console/promptForInput.ts', {
   namedExports: {
     promptForInput: promptForInputMock,
   },
 });
 
-const { getTvSeasonNumber } = await import('./getTvSeasonNumber');
+const { getTvSeasonNumber } = await import('./getTvSeasonNumber.ts');
 
 beforeEach(() => {
   promptForInputMock.mock.resetCalls();

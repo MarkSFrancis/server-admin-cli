@@ -1,4 +1,4 @@
-import { DOCS_BASE_URL } from '@/domain/docs';
+import { DOCS_BASE_URL } from '#/domain/docs.ts';
 import { Command } from 'commander';
 import open from 'open';
 

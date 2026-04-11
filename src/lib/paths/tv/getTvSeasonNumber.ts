@@ -1,6 +1,6 @@
 import { basename } from 'path';
-import { promptForInput } from '../../console/promptForInput';
-import { distinct } from '../../distinct';
+import { promptForInput } from '../../console/promptForInput.ts';
+import { distinct } from '../../distinct.ts';
 
 export const getTvSeasonNumber = async (path: string): Promise<number> => {
   const seasonPattern = /(S\d+)|(Season \d+)|(Specials)/gi;

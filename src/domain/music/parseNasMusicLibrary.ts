@@ -1,10 +1,10 @@
-import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob';
-import { readFilesFromGlob } from '@/lib/fs/glob/resolveGlob';
-import { SpecialFolders } from '@/lib/paths/SpeciaFolders';
+import { convertPathToGlob } from '#/lib/fs/glob/convertPathToGlob.ts';
+import { readFilesFromGlob } from '#/lib/fs/glob/resolveGlob.ts';
+import { SpecialFolders } from '#/lib/paths/SpeciaFolders.ts';
 import {
   MUSIC_FILE_EXTENSIONS,
   extensionsToGlobPattern,
-} from '@/lib/paths/exts';
+} from '#/lib/paths/exts.ts';
 
 export interface NasMusicEntry extends Record<string, string | number> {
   path: string;

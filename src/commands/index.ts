@@ -1,10 +1,10 @@
 import { program } from 'commander';
-import { animeCommand } from './anime';
-import { docsCommand } from './docs';
-import { subtitlesCommand } from './subtitles';
-import { tvCommand } from './tv';
-import { musicCommand } from './music';
-import { moviesCommand } from './movies';
+import { animeCommand } from './anime/index.ts';
+import { docsCommand } from './docs.ts';
+import { subtitlesCommand } from './subtitles/index.ts';
+import { tvCommand } from './tv/index.ts';
+import { musicCommand } from './music/index.ts';
+import { moviesCommand } from './movies/index.ts';
 
 program.addCommand(docsCommand);
 program.addCommand(tvCommand);

@@ -1,8 +1,8 @@
-import { getExternalSubtitlesForTv } from '@/domain/subtitles/getExternalSubtitlesForTv';
-import { getStreamLanguage } from '@/lib/media-container/getStreamLanguage';
-import { getSubtitleStreamsFromContainer } from '@/lib/media-container/subtitles/getSubtitleStreamsFromContainer';
-import { getSubtitleMetadataFromPath } from '@/lib/paths/subtitles/getSubtitleMetadataFromPath';
-import { FfprobeStream } from 'fluent-ffmpeg';
+import { getExternalSubtitlesForTv } from '#/domain/subtitles/getExternalSubtitlesForTv.ts';
+import { getStreamLanguage } from '#/lib/media-container/getStreamLanguage.ts';
+import { getSubtitleStreamsFromContainer } from '#/lib/media-container/subtitles/getSubtitleStreamsFromContainer.ts';
+import { getSubtitleMetadataFromPath } from '#/lib/paths/subtitles/getSubtitleMetadataFromPath.ts';
+import { type FfprobeStream } from 'fluent-ffmpeg';
 
 export const getSubtitleLanguages = async (path: string) => {
   const streams = await getSubtitleStreamsFromContainer(path);

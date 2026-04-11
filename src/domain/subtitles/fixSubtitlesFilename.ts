@@ -1,13 +1,13 @@
-import { moveFile } from '@/lib/fs/moveFile';
-import { getSubtitleMetadataFromPath } from '@/lib/paths/subtitles/getSubtitleMetadataFromPath';
-import { askForMissingSubtitlesMeta } from './askForMissingSubtitlesMeta';
-import { getFixedExternalSubtitlesPath } from '@/lib/paths/subtitles/getFixedExternalSubtitlesPath';
+import { moveFile } from '#/lib/fs/moveFile.ts';
+import { getSubtitleMetadataFromPath } from '#/lib/paths/subtitles/getSubtitleMetadataFromPath.ts';
+import { askForMissingSubtitlesMeta } from './askForMissingSubtitlesMeta.ts';
+import { getFixedExternalSubtitlesPath } from '#/lib/paths/subtitles/getFixedExternalSubtitlesPath.ts';
 import { stat } from 'fs/promises';
 import {
   type SubtitleGroupMember,
   guessSubtitleMetaFromGroupMeta,
-} from '@/lib/paths/subtitles/guessSubtitleMetaFromGroupMeta';
-import { pathExists } from '@/lib/fs/pathExists';
+} from '#/lib/paths/subtitles/guessSubtitleMetaFromGroupMeta.ts';
+import { pathExists } from '#/lib/fs/pathExists.ts';
 import { expand } from '@inquirer/prompts';
 import { basename } from 'path';
 

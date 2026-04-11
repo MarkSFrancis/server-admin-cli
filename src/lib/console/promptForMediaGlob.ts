@@ -1,9 +1,9 @@
 import { expand, rawlist, Separator } from '@inquirer/prompts';
 import { basename } from 'path';
-import { getSubfolders } from '../fs/getSubfolders';
-import { convertPathToGlob } from '../fs/glob/convertPathToGlob';
-import { SpecialFolders } from '../paths/SpeciaFolders';
-import { promptForInput } from './promptForInput';
+import { getSubfolders } from '../fs/getSubfolders.ts';
+import { convertPathToGlob } from '../fs/glob/convertPathToGlob.ts';
+import { SpecialFolders } from '../paths/SpeciaFolders.ts';
+import { promptForInput } from './promptForInput.ts';
 
 export const promptForMediaGlob = async () => {
   const specialPath = await getFolderSuggestPath();

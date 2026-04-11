@@ -1,12 +1,12 @@
 import {
   VIDEO_FILE_EXTENSIONS,
   extensionsToGlobPattern,
-} from '@/lib/paths/exts';
+} from '#/lib/paths/exts.ts';
 import { Command, Option } from 'commander';
 import { basename } from 'path';
-import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob';
-import { getSubtitlesForTv } from '@/domain/subtitles/getSubtitlesForTv';
-import { promptForMediaGlob } from '@/lib/console/promptForMediaGlob';
+import { resolveWslGlob } from '#/lib/fs/glob/resolveWslGlob.ts';
+import { getSubtitlesForTv } from '#/domain/subtitles/getSubtitlesForTv.ts';
+import { promptForMediaGlob } from '#/lib/console/promptForMediaGlob.ts';
 
 export const subtitlesReviewCommand = new Command('review')
   .description(

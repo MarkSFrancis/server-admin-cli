@@ -6,13 +6,13 @@ const ffprobeAsync = promisify<string, FfprobeData>(Ffmpeg.ffprobe);
 /**
  * The known types used by a stream's `codec_type`
  */
-export enum STREAM_TYPES {
-  audio = 'audio',
-  subtitles = 'subtitle',
-  video = 'video',
-  data = 'data',
-  attachments = 'attachment',
-}
+export const STREAM_TYPES = {
+  audio: 'audio',
+  subtitles: 'subtitle',
+  video: 'video',
+  data: 'data',
+  attachments: 'attachment',
+} as const;
 
 export const probeDataFromContainer = async (path: string) => {
   const result = await ffprobeAsync(path);

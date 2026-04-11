@@ -1,4 +1,4 @@
-import { findLanguageByCode } from './findLanguageByCode';
+import { findLanguageByCode } from './findLanguageByCode.ts';
 import { it } from 'node:test';
 import assert from 'node:assert';
 

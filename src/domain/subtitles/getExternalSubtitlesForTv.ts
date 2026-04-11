@@ -1,5 +1,5 @@
-import { readFromGlob } from '@/lib/fs/glob/resolveGlob';
-import { getExternalTvSubtitlesGlobs } from '@/lib/paths/subtitles/getExternalTvSubtitlesGlobs';
+import { readFromGlob } from '#/lib/fs/glob/resolveGlob.ts';
+import { getExternalTvSubtitlesGlobs } from '#/lib/paths/subtitles/getExternalTvSubtitlesGlobs.ts';
 
 export const getExternalSubtitlesForTv = async (
   path: string

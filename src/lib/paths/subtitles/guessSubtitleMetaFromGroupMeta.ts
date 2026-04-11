@@ -1,4 +1,4 @@
-import { type SubtitleMetadata } from '../../media-container/subtitles/getSubtitleMetadataFromStream';
+import { type SubtitleMetadata } from '../../media-container/subtitles/getSubtitleMetadataFromStream.ts';
 
 export interface SubtitleGroupMember {
   path: string;

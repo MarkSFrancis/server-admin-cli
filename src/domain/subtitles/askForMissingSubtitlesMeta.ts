@@ -1,5 +1,5 @@
-import { Iso6393Languages } from '@/lib/language/languages';
-import { type SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream';
+import { Iso6393Languages } from '#/lib/language/languages.ts';
+import { type SubtitleMetadata } from '#/lib/media-container/subtitles/getSubtitleMetadataFromStream.ts';
 import { confirm, select } from '@inquirer/prompts';
 
 export const askForMissingSubtitlesMeta = async (meta: SubtitleMetadata) => {

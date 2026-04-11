@@ -2,7 +2,7 @@ import {
   type AnimeScheduleAnime,
   getAnime,
   type AnimeScheduleWebsites,
-} from '@/lib/apis/animeschedule/getAnime';
+} from '#/lib/apis/animeschedule/getAnime.ts';
 
 export interface GetAnimeEpisodeDatesResultMatch {
   urls: {

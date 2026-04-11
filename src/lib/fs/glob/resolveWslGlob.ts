@@ -1,5 +1,5 @@
-import { fixWslPath } from './fixWslPath';
-import { readFilesFromGlob, readFromGlob } from './resolveGlob';
+import { fixWslPath } from './fixWslPath.ts';
+import { readFilesFromGlob, readFromGlob } from './resolveGlob.ts';
 
 export const resolveWslGlob = async (
   glob: string,

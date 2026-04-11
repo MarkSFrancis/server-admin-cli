@@ -1,8 +1,8 @@
-import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob';
+import { convertPathToGlob } from '#/lib/fs/glob/convertPathToGlob.ts';
 import {
   SUBTITLE_FILE_EXTENSIONS,
   extensionsToGlobPattern,
-} from '@/lib/paths/exts';
+} from '#/lib/paths/exts.ts';
 import { basename, extname } from 'path';
 
 export const getExternalMovieSubtitlesGlobs = (path: string): string[] => {

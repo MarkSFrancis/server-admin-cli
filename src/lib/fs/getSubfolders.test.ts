@@ -1,5 +1,5 @@
 import { type Stats } from 'fs';
-import { stub } from '../test-utils/stub';
+import { stub } from '../test-utils/stub.ts';
 import { beforeEach, it, mock } from 'node:test';
 import assert from 'node:assert';
 
@@ -13,7 +13,7 @@ mock.module('fs/promises', {
   },
 });
 
-const { getSubfolders } = await import('./getSubfolders');
+const { getSubfolders } = await import('./getSubfolders.ts');
 
 beforeEach(() => {
   statMock.mock.resetCalls();

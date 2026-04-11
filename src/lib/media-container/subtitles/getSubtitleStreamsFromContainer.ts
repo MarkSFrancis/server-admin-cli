@@ -1,7 +1,7 @@
 import {
   probeDataFromContainer,
   STREAM_TYPES,
-} from '../probeStreamsFromContainer';
+} from '../probeStreamsFromContainer.ts';
 
 export const getSubtitleStreamsFromContainer = async (path: string) => {
   const movieContainer = await probeDataFromContainer(path);

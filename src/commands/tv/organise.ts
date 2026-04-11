@@ -1,13 +1,13 @@
-import { fixTvFilename } from '@/domain/tv/fixTvFilename';
+import { fixTvFilename } from '#/domain/tv/fixTvFilename.ts';
 import { Command, Option } from 'commander';
 import {
   VIDEO_FILE_EXTENSIONS,
   extensionsToGlobPattern,
-} from '@/lib/paths/exts';
-import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob';
-import { fixExternalSubtitlesFilename } from '@/domain/subtitles/fixSubtitlesFilename';
-import { promptForMediaGlob } from '@/lib/console/promptForMediaGlob';
-import { getExternalSubtitlesForTv } from '@/domain/subtitles/getExternalSubtitlesForTv';
+} from '#/lib/paths/exts.ts';
+import { resolveWslGlob } from '#/lib/fs/glob/resolveWslGlob.ts';
+import { fixExternalSubtitlesFilename } from '#/domain/subtitles/fixSubtitlesFilename.ts';
+import { promptForMediaGlob } from '#/lib/console/promptForMediaGlob.ts';
+import { getExternalSubtitlesForTv } from '#/domain/subtitles/getExternalSubtitlesForTv.ts';
 
 export const tvOrganiseCommand = new Command('organise')
   .addOption(

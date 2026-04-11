@@ -1,6 +1,6 @@
 import { basename, dirname, extname, join } from 'path';
-import { getTvEpisodeNumber } from './getTvEpisodeNumber';
-import { getTvSeasonNumber } from './getTvSeasonNumber';
+import { getTvEpisodeNumber } from './getTvEpisodeNumber.ts';
+import { getTvSeasonNumber } from './getTvSeasonNumber.ts';
 
 export const getFixedTvEpisodePath = async (path: string) => {
   const seasonNumber = await getTvSeasonNumber(path);

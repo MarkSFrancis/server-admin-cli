@@ -1,6 +1,6 @@
 import { basename, extname } from 'path';
-import { promptForInput } from '../../console/promptForInput';
-import { distinct } from '../../distinct';
+import { promptForInput } from '../../console/promptForInput.ts';
+import { distinct } from '../../distinct.ts';
 
 export const getTvEpisodeNumber = async (path: string): Promise<number> => {
   const name = basename(path, extname(path));

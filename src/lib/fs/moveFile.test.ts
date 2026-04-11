@@ -1,7 +1,7 @@
 import { type Stats } from 'fs';
 import { mkdir, rename } from 'fs/promises';
-import { stub } from '../test-utils/stub';
-import { pathExists } from './pathExists';
+import { stub } from '../test-utils/stub.ts';
+import { pathExists } from './pathExists.ts';
 import { mock, beforeEach, it } from 'node:test';
 import assert from 'node:assert';
 
@@ -15,13 +15,13 @@ mock.module('fs/promises', {
     rename: renameMock,
   },
 });
-mock.module('./pathExists', {
+mock.module('./pathExists.ts', {
   namedExports: {
     pathExists: pathExistsMock,
   },
 });
 
-const { moveFile } = await import('./moveFile');
+const { moveFile } = await import('./moveFile.ts');
 
 beforeEach(() => {
   mkdirMock.mock.resetCalls();

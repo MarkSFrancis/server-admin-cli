@@ -1,4 +1,4 @@
-import { getPlexToken, plexClient } from './plexClient';
+import { getPlexToken, plexClient } from './plexClient.ts';
 
 export const getAllPlexLibraries = async () => {
   const queryString = new URLSearchParams({

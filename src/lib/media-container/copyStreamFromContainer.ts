@@ -1,5 +1,5 @@
 import ffmpeg from 'fluent-ffmpeg';
-import { runFfmpeg } from './ffmpeg';
+import { runFfmpeg } from './ffmpeg.ts';
 
 export const copyStreamFromContainer = async (
   inputPath: string,

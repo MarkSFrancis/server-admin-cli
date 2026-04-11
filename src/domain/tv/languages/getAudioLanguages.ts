@@ -1,6 +1,6 @@
-import { getAudioStreamsFromContainer } from '@/lib/media-container/audio/getAudioStreamsFromContainer';
-import { getStreamLanguage } from '@/lib/media-container/getStreamLanguage';
-import { FfprobeStream } from 'fluent-ffmpeg';
+import { getAudioStreamsFromContainer } from '#/lib/media-container/audio/getAudioStreamsFromContainer.ts';
+import { getStreamLanguage } from '#/lib/media-container/getStreamLanguage.ts';
+import { type FfprobeStream } from 'fluent-ffmpeg';
 
 export const getAudioLanguages = async (path: string) => {
   const streams = await getAudioStreamsFromContainer(path);

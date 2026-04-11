@@ -1,4 +1,4 @@
-import { distinct } from './distinct';
+import { distinct } from './distinct.ts';
 import { it } from 'node:test';
 import assert from 'node:assert';
 

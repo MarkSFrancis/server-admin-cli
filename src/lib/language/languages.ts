@@ -1,4 +1,4 @@
-import iso6393 from 'iso-639-3';
+import { iso6393 } from 'iso-639-3';
 
 /**
  * Category of a language:

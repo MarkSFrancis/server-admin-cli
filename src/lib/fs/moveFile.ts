@@ -1,6 +1,6 @@
 import { mkdir, rename } from 'fs/promises';
 import { basename, dirname, extname, join } from 'path';
-import { pathExists } from './pathExists';
+import { pathExists } from './pathExists.ts';
 
 /**
  * Moves a file to a new path, creating any necessary folders

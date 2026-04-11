@@ -1,5 +1,5 @@
 import { Argument, Command } from 'commander';
-import { getAnimeEpisodeDates } from '@/domain/anime/getAnimeEpisodeDates';
+import { getAnimeEpisodeDates } from '#/domain/anime/getAnimeEpisodeDates.ts';
 
 export const animeCommand = new Command('anime')
   .addArgument(

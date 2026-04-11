@@ -1,11 +1,14 @@
 import { Command } from 'commander';
 import path, { extname } from 'path';
-import { resolveWslGlob } from '@/lib/fs/glob/resolveWslGlob';
-import { SpecialFolders } from '@/lib/paths/SpeciaFolders';
-import { convertPathToGlob } from '@/lib/fs/glob/convertPathToGlob';
-import { getBasicMusicMeta, getMusicMeta } from '@/domain/music/getMusicMeta';
-import { getMusicDestinationFilename } from '@/domain/music/getMusicDestinationFilename';
-import { moveFile } from '@/lib/fs/moveFile';
+import { resolveWslGlob } from '#/lib/fs/glob/resolveWslGlob.ts';
+import { SpecialFolders } from '#/lib/paths/SpeciaFolders.ts';
+import { convertPathToGlob } from '#/lib/fs/glob/convertPathToGlob.ts';
+import {
+  getBasicMusicMeta,
+  getMusicMeta,
+} from '#/domain/music/getMusicMeta.ts';
+import { getMusicDestinationFilename } from '#/domain/music/getMusicDestinationFilename.ts';
+import { moveFile } from '#/lib/fs/moveFile.ts';
 
 // https://support.plex.tv/articles/200265296-adding-music-media-from-folders/#toc-0
 

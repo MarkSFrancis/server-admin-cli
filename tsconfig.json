@@ -1,17 +1,12 @@
-/* Optimised for NodeJs 22.x */
 {
-  "extends": "@tsconfig/node22/tsconfig.json",
+  "extends": "@tsconfig/node-lts/tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "baseUrl": "./",
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
     "paths": {
-      "@/*": ["src/*"]
-    },
-    "module": "preserve",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "noEmit": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+      "#/*": ["./src/*"]
+    }
+  }
 }

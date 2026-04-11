@@ -1,24 +1,23 @@
-import { readFromGlob } from '@/lib/fs/glob/resolveGlob';
-import { getExternalTvSubtitlesGlobs } from '@/lib/paths/subtitles/getExternalTvSubtitlesGlobs';
+import { readFromGlob } from '#/lib/fs/glob/resolveGlob.ts';
+import { getExternalTvSubtitlesGlobs } from '#/lib/paths/subtitles/getExternalTvSubtitlesGlobs.ts';
 import assert from 'node:assert';
 import { beforeEach, it, mock } from 'node:test';
 
 const getExternalTvSubtitlesGlobsMock =
   mock.fn<typeof getExternalTvSubtitlesGlobs>();
-mock.module('@/lib/paths/subtitles/getExternalTvSubtitlesGlobs', {
+mock.module('#/lib/paths/subtitles/getExternalTvSubtitlesGlobs.ts', {
   namedExports: {
     getExternalTvSubtitlesGlobs: getExternalTvSubtitlesGlobsMock,
   },
 });
 
 const resolveGlobMock = mock.fn<typeof readFromGlob>();
-mock.module('@/lib/fs/glob/resolveGlob', {
+mock.module('#/lib/fs/glob/resolveGlob.ts', {
   namedExports: { readFromGlob: resolveGlobMock },
 });
 
-const { getExternalSubtitlesForTv } = await import(
-  './getExternalSubtitlesForTv'
-);
+const { getExternalSubtitlesForTv } =
+  await import('./getExternalSubtitlesForTv.ts');
 
 beforeEach(() => {
   getExternalTvSubtitlesGlobsMock.mock.resetCalls();

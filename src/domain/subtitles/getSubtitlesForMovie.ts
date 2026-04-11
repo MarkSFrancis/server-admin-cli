@@ -1,5 +1,5 @@
-import { getExternalSubtitlesForMovie } from './getExternalSubtitlesForMovie';
-import { getSubtitleStreamsFromContainer } from '@/lib/media-container/subtitles/getSubtitleStreamsFromContainer';
+import { getExternalSubtitlesForMovie } from './getExternalSubtitlesForMovie.ts';
+import { getSubtitleStreamsFromContainer } from '#/lib/media-container/subtitles/getSubtitleStreamsFromContainer.ts';
 
 export const getSubtitlesForMovie = async (path: string) => {
   const externalSubtitlePaths = await getExternalSubtitlesForMovie(path);

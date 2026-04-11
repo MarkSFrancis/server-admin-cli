@@ -1,11 +1,11 @@
-import { probeDataFromContainer } from '../probeStreamsFromContainer';
-import { stub } from '@/lib/test-utils/stub';
+import { probeDataFromContainer } from '../probeStreamsFromContainer.ts';
+import { stub } from '#/lib/test-utils/stub.ts';
 import { type FfprobeData } from 'fluent-ffmpeg';
 import { mock, beforeEach, it } from 'node:test';
 import assert from 'node:assert';
 
 const probeDataFromContainerMock = mock.fn<typeof probeDataFromContainer>();
-mock.module('../probeStreamsFromContainer', {
+mock.module('../probeStreamsFromContainer.ts', {
   namedExports: {
     probeDataFromContainer: probeDataFromContainerMock,
     STREAM_TYPES: {
@@ -14,9 +14,8 @@ mock.module('../probeStreamsFromContainer', {
   },
 });
 
-const { getAudioStreamsFromContainer } = await import(
-  './getAudioStreamsFromContainer'
-);
+const { getAudioStreamsFromContainer } =
+  await import('./getAudioStreamsFromContainer.ts');
 
 beforeEach(() => {
   probeDataFromContainerMock.mock.resetCalls();

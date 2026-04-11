@@ -1,5 +1,5 @@
 import { type FfprobeStream } from 'fluent-ffmpeg';
-import { getStreamLanguage } from '../getStreamLanguage';
+import { getStreamLanguage } from '../getStreamLanguage.ts';
 
 export interface SubtitleMetadata {
   title?: string;

@@ -1,7 +1,7 @@
-import { findLanguageByCode } from '@/lib/language/findLanguageByCode';
-import { type SubtitleMetadata } from '@/lib/media-container/subtitles/getSubtitleMetadataFromStream';
+import { findLanguageByCode } from '#/lib/language/findLanguageByCode.ts';
+import { type SubtitleMetadata } from '#/lib/media-container/subtitles/getSubtitleMetadataFromStream.ts';
 import { basename, extname } from 'path';
-import { externalSubtitlesMetaFlags } from './externalSubtitlesMetaFlags';
+import { externalSubtitlesMetaFlags } from './externalSubtitlesMetaFlags.ts';
 
 export const getSubtitleMetadataFromPath = (path: string): SubtitleMetadata => {
   const filenameWithExt = basename(path);

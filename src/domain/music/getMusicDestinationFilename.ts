@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { BasicMusicMeta } from './getMusicMeta';
+import type { BasicMusicMeta } from './getMusicMeta.ts';
 
 /**
  * Gets where a music file should be stored in the music library according to organisation rules
