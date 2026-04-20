@@ -20,7 +20,7 @@
     "@tsconfig/node-lts": "^24.0.0",
     "@types/fluent-ffmpeg": "^2.1.28",
     "@types/node": "^25",
-    "eslint": "^10.2.0",
+    "eslint": "^10.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "minimatch": "^10.2.5",
