@@ -26,7 +26,7 @@
     "minimatch": "^10.2.6",
     "prettier": "^3.9.10",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.71.1"
+    "typescript-eslint": "^8.71.2"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --cache --fix",
