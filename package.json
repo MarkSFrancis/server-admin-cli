@@ -33,7 +33,7 @@
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "@inquirer/prompts": "^8.8.0",
+    "@inquirer/prompts": "^8.8.1",
     "axios": "^1.21.1",
     "commander": "^15.1.0",
     "fluent-ffmpeg": "^2.1.3",
